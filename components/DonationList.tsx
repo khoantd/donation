@@ -6,9 +6,10 @@ import DonationCard from './DonationCard';
 interface DonationListProps {
     donations: DonationItem[];
     onManage?: (donation: DonationItem) => void;
+    onViewDetails?: (donation: DonationItem) => void;
 }
 
-const DonationList: React.FC<DonationListProps> = ({ donations, onManage }) => {
+const DonationList: React.FC<DonationListProps> = ({ donations, onManage, onViewDetails }) => {
     const { user } = useAuth();
     
     if (donations.length === 0) {
@@ -31,6 +32,7 @@ const DonationList: React.FC<DonationListProps> = ({ donations, onManage }) => {
                     donation={donation} 
                     isAdmin={user?.role === 'admin'}
                     onManage={onManage}
+                    onViewDetails={onViewDetails}
                 />
             ))}
         </div>

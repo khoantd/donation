@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 
-type Page = 'home' | 'donate' | 'history' | 'admin' | 'login';
+type Page = 'home' | 'donate' | 'history' | 'admin' | 'login' | 'profile' | 'impact' | 'donor-management' | 'recipient-registration' | 'request-items' | 'matching';
 
 interface HeaderProps {
     onNavigate: (page: Page) => void;
@@ -33,18 +33,49 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
     const renderNavLinks = (isMobile: boolean = false) => {
         const closeMenu = isMobile ? () => setIsMenuOpen(false) : () => {};
 
-        if (!user) return null;
+        // Public navigation links (available to all users)
+        const publicLinks = (
+            <>
+                <NavLink onClick={() => { onNavigate('home'); closeMenu(); }} isActive={currentPage === 'home'}>Home</NavLink>
+                <NavLink onClick={() => { onNavigate('impact'); closeMenu(); }} isActive={currentPage === 'impact'}>Impact Stories</NavLink>
+            </>
+        );
 
-        if (user.role === 'admin') {
-            return <NavLink onClick={() => { onNavigate('admin'); closeMenu(); }} isActive={currentPage === 'admin'}>Admin Panel</NavLink>
+        if (!user) {
+            return publicLinks;
         }
 
+        // Authenticated user navigation links
+        if (user.role === 'admin') {
+            return (
+                <>
+                    {publicLinks}
+                    <NavLink onClick={() => { onNavigate('admin'); closeMenu(); }} isActive={currentPage === 'admin'}>Admin Panel</NavLink>
+                    <NavLink onClick={() => { onNavigate('donor-management'); closeMenu(); }} isActive={currentPage === 'donor-management'}>Donor Management</NavLink>
+                    <NavLink onClick={() => { onNavigate('matching'); closeMenu(); }} isActive={currentPage === 'matching'}>Matching</NavLink>
+                </>
+            );
+        }
+
+        // Check if user is recipient or has recipient role
+        const isRecipient = user.role === 'recipient' || user.roles?.includes('recipient');
+        const isDonor = user.role === 'donor' || user.roles?.includes('donor');
+        
         return (
             <>
-                <NavLink onClick={() => { onNavigate('donate'); closeMenu(); }} isActive={currentPage === 'donate'}>Donate</NavLink>
-                <NavLink onClick={() => { onNavigate('history'); closeMenu(); }} isActive={currentPage === 'history'}>My History</NavLink>
+                {publicLinks}
+                {isDonor && (
+                    <>
+                        <NavLink onClick={() => { onNavigate('donate'); closeMenu(); }} isActive={currentPage === 'donate'}>Donate</NavLink>
+                        <NavLink onClick={() => { onNavigate('history'); closeMenu(); }} isActive={currentPage === 'history'}>My History</NavLink>
+                    </>
+                )}
+                {isRecipient && (
+                    <NavLink onClick={() => { onNavigate('request-items'); closeMenu(); }} isActive={currentPage === 'request-items'}>Request Items</NavLink>
+                )}
+                <NavLink onClick={() => { onNavigate('profile'); closeMenu(); }} isActive={currentPage === 'profile'}>My Profile</NavLink>
             </>
-        )
+        );
     }
 
     return (
@@ -73,6 +104,9 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
                                 </button>
                                 {isProfileOpen && (
                                      <div className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5" style={{top: '100%'}}>
+                                        {user.role === 'donor' && (
+                                            <button onClick={() => { onNavigate('profile'); setIsProfileOpen(false); }} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Profile</button>
+                                        )}
                                         <button onClick={() => { logout(); onNavigate('home'); setIsProfileOpen(false); }} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign out</button>
                                     </div>
                                 )}

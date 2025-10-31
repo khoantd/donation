@@ -1,0 +1,181 @@
+# Charity Connect - Cursor Rules
+
+## Project Overview
+This is a React 19 + TypeScript + Vite donation management application called "Charity Connect". It connects donors with charitable organizations, allowing users to donate items and track their donations. Admins can manage and approve donations.
+
+## Tech Stack
+- **Framework**: React 19.2.0 with functional components and hooks
+- **Language**: TypeScript 5.8.2
+- **Build Tool**: Vite 6.2.0
+- **Styling**: TailwindCSS (utility classes, no separate CSS files)
+- **State Management**: React Context API
+- **Module System**: ES Modules
+
+## Project Structure
+```
+/
+├── components/       # Reusable React components
+├── context/         # React Context providers (AuthContext, etc.)
+├── pages/           # Page-level components (HomePage, DonatePage, etc.)
+├── services/        # Data service layer (donationService, etc.)
+├── types.ts         # TypeScript type definitions and enums
+├── App.tsx          # Root component with routing logic
+└── index.tsx        # Application entry point
+```
+
+## Code Style & Conventions
+
+### TypeScript
+- Use TypeScript for all files
+- Define types in `types.ts` for shared interfaces and enums
+- Use interfaces for component props: `interface ComponentProps { ... }`
+- Use explicit return types for functions when beneficial: `React.FC<Props>` or explicit return types
+- Use `type` aliases for union types: `type Page = 'home' | 'donate' | 'history' | 'admin' | 'login'`
+- Prefer `Omit<>` utility type when creating partial types: `Omit<DonationItem, 'id' | 'status' | 'submittedAt'>`
+
+### React Components
+- Use functional components exclusively
+- Use React hooks (`useState`, `useContext`, `useEffect`, etc.)
+- Components should be exported as default: `export default ComponentName`
+- Use `React.FC<Props>` type annotation for components
+- Define props interfaces above the component
+- Extract reusable sub-components within the same file when appropriate
+- Use descriptive component and prop names
+
+### Naming Conventions
+- **Components**: PascalCase (e.g., `DonationForm`, `Header`)
+- **Files**: PascalCase for components/pages (e.g., `DonationForm.tsx`, `HomePage.tsx`)
+- **Functions/Variables**: camelCase (e.g., `handleSubmit`, `donationService`)
+- **Types/Interfaces**: PascalCase (e.g., `DonationItem`, `User`)
+- **Constants**: UPPER_SNAKE_CASE for constants, camelCase for mock data (e.g., `MOCK_DONOR_USER`)
+
+### Context & State Management
+- Use React Context API for global state (authentication, user data)
+- Export context provider component (e.g., `AuthProvider`)
+- Export custom hook for accessing context (e.g., `useAuth()`)
+- Custom hooks should throw error if used outside provider
+- Context files should be in `context/` directory
+
+### Service Layer
+- Service functions should be async and return Promises
+- Use descriptive function names: `getDonations`, `addDonation`, `updateDonationStatus`
+- Service functions should handle errors and throw appropriate errors
+- Simulate API delays with `setTimeout` or `delay()` helper when using mock data
+- Service files should be in `services/` directory and export functions
+
+### Styling (TailwindCSS)
+- Use TailwindCSS utility classes exclusively
+- Primary brand color: `teal-500` / `teal-600` / `teal-700`
+- Use responsive prefixes: `md:`, `sm:`, `lg:`
+- Mobile-first approach: base styles for mobile, add `md:` and up for larger screens
+- Common patterns:
+  - Buttons: `bg-teal-500 text-white px-4 py-2 rounded-md hover:bg-teal-600 transition`
+  - Cards: `bg-white rounded-lg shadow-lg p-6`
+  - Forms: `border border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500`
+- Use semantic spacing utilities: `space-y-6`, `gap-4`, `mb-8`
+- Use flex/grid utilities for layouts
+
+### Routing & Navigation
+- Use local state in `App.tsx` for page routing (not a router library)
+- Page types: `'home' | 'donate' | 'history' | 'admin' | 'login'`
+- Implement navigation guards: check auth before allowing access to protected pages
+- Redirect unauthenticated users to login page when accessing protected routes
+- Pass `onNavigate` callback to pages/components that need navigation
+
+### Error Handling
+- Use try/catch blocks for async operations
+- Display user-friendly error messages in UI
+- Set error state for form validation errors
+- Show error messages using TailwindCSS styled divs: `bg-red-100 text-red-800 rounded-md`
+
+### Loading States
+- Use loading states for async operations: `'idle' | 'loading' | 'success' | 'error'`
+- Show loading spinners during async operations
+- Use `loading` boolean from context for auth operations
+- Disable buttons during loading: `disabled={status === 'loading'}`
+
+### Form Handling
+- Use controlled components with `useState`
+- Validate required fields before submission
+- Show validation errors clearly
+- Reset forms after successful submission
+- Use proper input types: `text`, `tel`, `number`, `textarea`, `file`
+
+### Component Patterns
+- **Page Components**: Located in `pages/`, handle routing and page-level logic
+- **Reusable Components**: Located in `components/`, should be generic and reusable
+- **Service Functions**: Pure functions, no side effects except data operations
+- **Context Providers**: Wrap app at root level in `App.tsx`
+
+## File Organization
+- Group related files in directories (`components/`, `pages/`, `services/`, `context/`)
+- Each component/page should be in its own file
+- Shared types in `types.ts` at root
+- Export only what's needed from each file
+
+## Best Practices
+1. **Component Composition**: Break down complex components into smaller, focused components
+2. **Type Safety**: Use TypeScript strictly, avoid `any` type
+3. **Immutability**: Don't mutate state directly, use setState functions
+4. **Accessibility**: Use semantic HTML, proper labels for form inputs
+5. **Responsive Design**: Always consider mobile, tablet, and desktop views
+6. **Code Reusability**: Extract common logic into hooks or utilities
+7. **Error Boundaries**: Consider error boundaries for production apps
+8. **Performance**: Use proper React patterns (avoid unnecessary re-renders)
+
+## Common Patterns
+
+### Component with Props
+```typescript
+interface ComponentProps {
+    onNavigate: (page: Page) => void;
+    currentPage: Page;
+}
+
+const Component: React.FC<ComponentProps> = ({ onNavigate, currentPage }) => {
+    // component logic
+};
+```
+
+### Using Context
+```typescript
+const { user, loading, login, logout } = useAuth();
+```
+
+### Service Call Pattern
+```typescript
+const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+try {
+    setStatus('loading');
+    await serviceFunction();
+    setStatus('success');
+} catch (err) {
+    setStatus('error');
+}
+```
+
+### Button with Loading State
+```typescript
+<button
+    disabled={status === 'loading'}
+    className="... disabled:bg-teal-300 disabled:cursor-not-allowed"
+>
+    {status === 'loading' ? 'Loading...' : 'Submit'}
+</button>
+```
+
+## Notes
+- This is a donation management app - always consider user experience and clarity
+- Mock data is currently used in services - ready to be replaced with real API calls
+- Authentication is currently mock-based - ready for real auth integration
+- The app uses teal as the primary brand color - maintain consistency
+- All pages should be responsive and mobile-friendly
+
+## Development Guidelines
+- Always test components on different screen sizes
+- Ensure proper TypeScript typing throughout
+- Maintain consistent code style and formatting
+- Add proper error handling for all async operations
+- Use semantic HTML elements
+- Follow React best practices (hooks rules, dependency arrays, etc.)
+

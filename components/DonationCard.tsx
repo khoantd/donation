@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { DonationItem, DonationStatus } from '../types';
 
 interface DonationCardProps {
     donation: DonationItem;
     isAdmin: boolean;
     onManage?: (donation: DonationItem) => void;
+    onViewDetails?: (donation: DonationItem) => void;
 }
 
 const getStatusColor = (status: DonationStatus) => {
@@ -22,11 +23,91 @@ const getStatusColor = (status: DonationStatus) => {
     }
 };
 
-const DonationCard: React.FC<DonationCardProps> = ({ donation, isAdmin, onManage }) => {
+const DonationCard: React.FC<DonationCardProps> = ({ donation, isAdmin, onManage, onViewDetails }) => {
+    // Get all images, prioritizing imageUrls array, fallback to imageUrl for backward compatibility
+    const allImages = donation.imageUrls && donation.imageUrls.length > 0
+        ? donation.imageUrls
+        : [donation.imageUrl];
+    
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const hasMultipleImages = allImages.length > 1;
+
+    const getCurrentImage = () => allImages[currentImageIndex] || allImages[0];
+
     return (
-        <div className="bg-white rounded-lg shadow-md overflow-hidden transition-shadow duration-300 hover:shadow-xl">
+        <div 
+            className="bg-white rounded-lg shadow-md overflow-hidden transition-shadow duration-300 hover:shadow-xl cursor-pointer"
+            onClick={() => onViewDetails && onViewDetails(donation)}
+        >
             <div className="flex flex-col md:flex-row">
-                <img className="h-48 w-full md:h-auto md:w-48 object-cover" src={donation.imageUrl} alt={donation.itemName} />
+                <div className="relative h-48 w-full md:h-auto md:w-48 overflow-hidden bg-gray-100">
+                    <img 
+                        className="h-full w-full object-cover" 
+                        src={getCurrentImage()} 
+                        alt={donation.itemName}
+                    />
+                    
+                    {/* Image Gallery Navigation */}
+                    {hasMultipleImages && (
+                        <>
+                            {/* Image Counter */}
+                            <div className="absolute top-2 left-2 bg-black bg-opacity-60 text-white text-xs px-2 py-1 rounded">
+                                {currentImageIndex + 1} / {allImages.length}
+                            </div>
+                            
+                            {/* Previous Button */}
+                            {currentImageIndex > 0 && (
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setCurrentImageIndex(prev => prev - 1);
+                                    }}
+                                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-60 hover:bg-opacity-80 text-white rounded-full p-1.5 transition"
+                                    aria-label="Previous image"
+                                >
+                                    <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
+                                    </svg>
+                                </button>
+                            )}
+                            
+                            {/* Next Button */}
+                            {currentImageIndex < allImages.length - 1 && (
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setCurrentImageIndex(prev => prev + 1);
+                                    }}
+                                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-60 hover:bg-opacity-80 text-white rounded-full p-1.5 transition"
+                                    aria-label="Next image"
+                                >
+                                    <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                                    </svg>
+                                </button>
+                            )}
+                            
+                            {/* Thumbnail Dots */}
+                            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
+                                {allImages.map((_, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setCurrentImageIndex(index);
+                                        }}
+                                        className={`h-2 rounded-full transition-all ${
+                                            index === currentImageIndex
+                                                ? 'w-6 bg-white'
+                                                : 'w-2 bg-white bg-opacity-50 hover:bg-opacity-75'
+                                        }`}
+                                        aria-label={`Go to image ${index + 1}`}
+                                    />
+                                ))}
+                            </div>
+                        </>
+                    )}
+                </div>
                 <div className="p-6 flex flex-col justify-between flex-grow">
                     <div>
                         <div className="flex justify-between items-start">
@@ -56,16 +137,30 @@ const DonationCard: React.FC<DonationCardProps> = ({ donation, isAdmin, onManage
                              <p>Submitted: {donation.submittedAt.toLocaleDateString()}</p>
                         </div>
                         
-                        {isAdmin && onManage && (
-                           <div className="mt-4 sm:mt-0">
+                        <div className="mt-4 sm:mt-0 flex gap-2">
+                            {onViewDetails && (
                                 <button
-                                     onClick={() => onManage(donation)}
-                                     className="px-4 py-2 bg-teal-500 text-white text-sm font-semibold rounded-md hover:bg-teal-600 transition shadow"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        onViewDetails(donation);
+                                    }}
+                                    className="px-4 py-2 bg-teal-500 text-white text-sm font-semibold rounded-md hover:bg-teal-600 transition shadow"
                                 >
-                                     Manage
+                                    View Details
                                 </button>
-                            </div>
-                        )}
+                            )}
+                            {isAdmin && onManage && (
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        onManage(donation);
+                                    }}
+                                    className="px-4 py-2 bg-blue-500 text-white text-sm font-semibold rounded-md hover:bg-blue-600 transition shadow"
+                                >
+                                    Manage
+                                </button>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
