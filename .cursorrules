@@ -1,7 +1,12 @@
 # Charity Connect - Cursor Rules
 
 ## Project Overview
-This is a React 19 + TypeScript + Vite donation management application called "Charity Connect". It connects donors with charitable organizations, allowing users to donate items and track their donations. Admins can manage and approve donations.
+This is a React 19 + TypeScript + Vite donation management application called "Charity Connect". It's a two-way platform that connects donors with recipients:
+- **Donors** can donate items and track their donation history, achievements, and impact
+- **Recipients** can register, create item requests, and receive donations
+- **Admins** can manage users, donations, requests, matching, and system configuration via Master Data Management
+- **Multi-role support**: Users can have multiple roles (e.g., both donor and recipient)
+- Features include donation-request matching, impact stories, leaderboards, achievements, and comprehensive admin tools
 
 ## Tech Stack
 - **Framework**: React 19.2.0 with functional components and hooks
@@ -15,9 +20,49 @@ This is a React 19 + TypeScript + Vite donation management application called "C
 ```
 /
 ├── components/       # Reusable React components
+│   ├── AnimatedStatCard.tsx
+│   ├── DonationCard.tsx
+│   ├── DonationDetailsModal.tsx
+│   ├── DonationForm.tsx
+│   ├── DonationList.tsx
+│   ├── DonorLeaderboard.tsx
+│   ├── Footer.tsx
+│   ├── Header.tsx
+│   └── SearchAndFilter.tsx
 ├── context/         # React Context providers (AuthContext, etc.)
-├── pages/           # Page-level components (HomePage, DonatePage, etc.)
-├── services/        # Data service layer (donationService, etc.)
+├── pages/           # Page-level components
+│   ├── AdminDashboard.tsx
+│   ├── DonatePage.tsx
+│   ├── DonorManagement.tsx
+│   ├── DonorProfile.tsx
+│   ├── HistoryPage.tsx
+│   ├── HomePage.tsx
+│   ├── ImpactStories.tsx
+│   ├── LoginPage.tsx
+│   ├── MatchingPage.tsx
+│   ├── MasterDataManagement.tsx
+│   ├── RecipientProfile.tsx
+│   ├── RecipientRegistration.tsx
+│   ├── RequestItemsPage.tsx
+│   └── UserManagement.tsx
+├── services/        # Data service layer
+│   ├── donationService.ts
+│   ├── donorManagementService.ts
+│   ├── donorProfileService.ts
+│   ├── exportService.ts
+│   ├── homeStatsService.ts
+│   ├── imageService.ts
+│   ├── impactStoryService.ts
+│   ├── leaderboardService.ts
+│   ├── masterDataService.ts
+│   ├── matchingService.ts
+│   ├── recipientProfileService.ts
+│   ├── recipientRegistrationService.ts
+│   ├── requestService.ts
+│   └── userManagementService.ts
+├── utils/           # Utility functions and hooks
+│   ├── useAnimatedCounter.ts
+│   └── useScrollAnimation.ts
 ├── types.ts         # TypeScript type definitions and enums
 ├── App.tsx          # Root component with routing logic
 └── index.tsx        # Application entry point
@@ -58,10 +103,15 @@ This is a React 19 + TypeScript + Vite donation management application called "C
 
 ### Service Layer
 - Service functions should be async and return Promises
-- Use descriptive function names: `getDonations`, `addDonation`, `updateDonationStatus`
+- Use descriptive function names: `getDonations`, `addDonation`, `updateDonationStatus`, `getMatches`, `createRequest`, etc.
 - Service functions should handle errors and throw appropriate errors
 - Simulate API delays with `setTimeout` or `delay()` helper when using mock data
 - Service files should be in `services/` directory and export functions
+- **Image Service** (`imageService.ts`): Handles image compression (max 500KB), resizing (max 1920x1080), validation (type, size), supports multiple images (up to 5)
+- **Export Service** (`exportService.ts`): Handles CSV/JSON/PDF exports for donations, donor activity reports, statistics
+- **Matching Service** (`matchingService.ts`): Handles donation-request matching with scoring algorithm (category, quantity, location, urgency weights)
+- **Master Data Service** (`masterDataService.ts`): Manages categories, status types, urgency levels, roles & permissions, matching algorithm configuration
+- **User Management Service** (`userManagementService.ts`): Handles user CRUD, role assignment, account status, verification, activity tracking
 
 ### Styling (TailwindCSS)
 - Use TailwindCSS utility classes exclusively
@@ -77,10 +127,13 @@ This is a React 19 + TypeScript + Vite donation management application called "C
 
 ### Routing & Navigation
 - Use local state in `App.tsx` for page routing (not a router library)
-- Page types: `'home' | 'donate' | 'history' | 'admin' | 'login'`
+- Page types: `'home' | 'donate' | 'history' | 'admin' | 'login' | 'profile' | 'impact' | 'donor-management' | 'recipient-registration' | 'request-items' | 'matching' | 'master-data' | 'user-management'`
 - Implement navigation guards: check auth before allowing access to protected pages
 - Redirect unauthenticated users to login page when accessing protected routes
+- Role-based routing: admin-only pages (`admin`, `donor-management`, `matching`, `master-data`, `user-management`), recipient-only pages (`request-items`)
+- Profile page routing: route to `DonorProfile` for donors, `RecipientProfile` for recipients based on user role(s)
 - Pass `onNavigate` callback to pages/components that need navigation
+- Multi-role users: check `user.roles` array or `user.role` for access control (e.g., `user.role === 'admin' || user.roles?.includes('recipient')`)
 
 ### Error Handling
 - Use try/catch blocks for async operations
@@ -99,7 +152,12 @@ This is a React 19 + TypeScript + Vite donation management application called "C
 - Validate required fields before submission
 - Show validation errors clearly
 - Reset forms after successful submission
-- Use proper input types: `text`, `tel`, `number`, `textarea`, `file`
+- Use proper input types: `text`, `tel`, `number`, `textarea`, `file`, `email`, `date`
+- **Image Upload**: Support multiple images (up to 5), validate file type and size, use `imageService.ts` for compression/resizing
+- **Multi-step Forms**: Use step-by-step progress indicators (e.g., RecipientRegistration has 3 steps)
+- **Password Strength**: Show visual password strength indicator with color coding
+- **Email Validation**: Real-time email availability checking with debouncing
+- **File Upload**: Handle file validation, preview, compression before submission
 
 ### Component Patterns
 - **Page Components**: Located in `pages/`, handle routing and page-level logic
@@ -164,12 +222,136 @@ try {
 </button>
 ```
 
+### Image Upload Pattern
+```typescript
+import { compressImage, validateImage } from '../services/imageService';
+
+const handleImageUpload = async (files: FileList) => {
+    const validImages = await Promise.all(
+        Array.from(files).map(async (file) => {
+            if (!validateImage(file)) throw new Error('Invalid image');
+            return await compressImage(file);
+        })
+    );
+    // Use compressed images
+};
+```
+
+### Role-based Rendering
+```typescript
+const { user } = useAuth();
+
+// Check for single role
+{user.role === 'admin' && <AdminPanel />}
+
+// Check for multiple roles
+{(user.role === 'recipient' || user.roles?.includes('recipient')) && <RequestButton />}
+
+// Check for both roles
+{user.roles?.includes('donor') && user.roles?.includes('recipient') && <BothRolesView />}
+```
+
+### Matching Service Pattern
+```typescript
+import { getMatchingSuggestions, confirmMatch } from '../services/matchingService';
+
+const [matches, setMatches] = useState<Match[]>([]);
+const suggestions = await getMatchingSuggestions(donationId);
+// Process matching suggestions with scores (0-100)
+```
+
+### Master Data Service Pattern
+```typescript
+import { getCategories, getStatusTypes, getRoles } from '../services/masterDataService';
+
+const categories = await getCategories();
+const statusTypes = await getStatusTypes();
+const roles = await getRoles();
+// Use master data for dropdowns, filters, etc.
+```
+
+## User Roles & Permissions
+
+### User Roles
+- **Donor**: Can donate items, view donation history, achievements, goals, leaderboard
+- **Recipient**: Can create item requests, view recipient profile, receive donations
+- **Admin**: Full access to admin dashboard, user management, donor management, matching, master data management
+- **Multi-role**: Users can have multiple roles (e.g., both donor and recipient) via `roles` array in User interface
+
+### Role-based Access Control
+- Check `user.role === 'admin'` for admin-only features
+- Check `user.role === 'recipient' || user.roles?.includes('recipient')` for recipient features
+- Check `user.role === 'donor' || user.roles?.includes('donor')` for donor features
+- Master Data Management provides granular role-based permissions via Roles & Permissions system
+- User Management System handles role assignment and management
+
+## Key Features & Systems
+
+### Master Data Management
+- **Categories**: Donation and request categories with hierarchy, icons, colors, custom fields, visibility settings
+- **Status Types**: Unified status configuration (donation, request, delivery, verification, matching statuses)
+- **Urgency Levels**: Priority/urgency levels (High/Urgent, Medium, Low) with scoring weights
+- **Roles & Permissions**: System roles with granular permissions matrix (read, write, delete, approve, manage, view, export)
+- **Matching Algorithm Configuration**: Matching score weights (category, quantity, location, urgency, request age)
+
+### User Management System
+- Unified user administration (donors, recipients, admins, moderators)
+- User CRUD operations, role assignment, account status management
+- Account verification workflow (pending, verified, rejected)
+- User activity tracking (login history, activity timeline)
+- User tags, communication history, bulk operations
+
+### Matching System
+- Automatic matching suggestions with scoring algorithm (0-100 score)
+- Manual matching interface for admins
+- Batch matching support (one donation to multiple recipients or vice versa)
+- Partial fulfillment support (split donations)
+- Match confirmation workflow (confirm, reject, fulfill, cancel)
+
+### Donation Features
+- Multi-image upload (up to 5 images per donation)
+- Image compression (max 500KB) and resizing (max 1920x1080)
+- Admin notes (private notes visible only to admins)
+- Action history tracking (status changes, quantity updates)
+- Donation details modal with image gallery, status timeline, inline editing
+
+### Request System (Recipients)
+- Create item requests with category, quantity, description, urgency level
+- Multiple active requests per recipient
+- Request status tracking (pending approval, approved, matched, fulfilled, cancelled, expired)
+- Auto-expiry for old requests (configurable, default 90 days)
+- Image upload support for requests
+
+### Donor Profile Features
+- Personal donation statistics (total donations, items delivered, people helped)
+- Achievement badges/milestones (9 achievements with rarity levels: common, rare, epic, legendary)
+- Donation goals with progress tracking (items, donations, categories)
+- Donation trends chart (last 6 months)
+- Favorite categories display (top 3 most donated categories)
+
+### Recipient Profile Features
+- Personal statistics dashboard (items received, requests submitted, fulfilled requests)
+- Active requests overview with status badges
+- Request history timeline with visual status tracking
+- Profile customization (bio, family info, preferences)
+- Communication preferences, notification settings
+- Profile completeness indicator
+
+### Impact & Engagement
+- **Impact Stories**: Before/after photos, testimonials, impact metrics, featured stories
+- **Leaderboard**: Top donors by items/quantity, monthly/all-time leaderboards, privacy controls
+- **Homepage Stats**: Animated statistics cards with scroll-triggered animations
+
 ## Notes
-- This is a donation management app - always consider user experience and clarity
+- This is a two-way donation management platform - always consider both donor and recipient experiences
 - Mock data is currently used in services - ready to be replaced with real API calls
 - Authentication is currently mock-based - ready for real auth integration
 - The app uses teal as the primary brand color - maintain consistency
 - All pages should be responsive and mobile-friendly
+- Users can have multiple roles (check `user.roles` array)
+- Image handling uses `imageService.ts` for compression and resizing
+- Export functionality uses `exportService.ts` for CSV/JSON/PDF exports
+- Master Data Management is the central configuration system for categories, statuses, roles, etc.
 
 ## Development Guidelines
 - Always test components on different screen sizes
@@ -178,4 +360,12 @@ try {
 - Add proper error handling for all async operations
 - Use semantic HTML elements
 - Follow React best practices (hooks rules, dependency arrays, etc.)
+- **Image Handling**: Always use `imageService.ts` for image compression and validation
+- **Role Checks**: Always check both `user.role` and `user.roles` array for multi-role support
+- **Master Data**: Use master data services for categories, statuses, roles instead of hardcoding
+- **Export**: Use `exportService.ts` for all export functionality (CSV, JSON, PDF)
+- **Matching**: Use `matchingService.ts` for all donation-request matching logic
+- **Admin Notes**: Use `AdminNote` interface from `types.ts` for admin notes on donations
+- **Status Management**: Use Master Data status types instead of hardcoding status values
+- **User Management**: Use `userManagementService.ts` for all user CRUD and management operations
 
