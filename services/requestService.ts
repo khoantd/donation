@@ -12,6 +12,14 @@ export const REQUEST_CATEGORIES = ['Clothing', 'Food', 'Electronics', 'Books', '
 const REQUEST_EXPIRATION_DAYS = 90;
 
 /**
+ * Get all item requests
+ */
+export const getAllItemRequests = async (): Promise<ItemRequest[]> => {
+    await delay(300);
+    return [...mockItemRequests];
+};
+
+/**
  * Create a new item request
  */
 export const createItemRequest = async (request: Omit<ItemRequest, 'id' | 'submittedAt' | 'status'>): Promise<ItemRequest> => {

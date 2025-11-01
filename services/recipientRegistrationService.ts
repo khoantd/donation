@@ -357,10 +357,28 @@ export const checkEmailAvailability = async (email: string): Promise<boolean> =>
 
 /**
  * Get registered user by email
+ * Checks both recipientRegistrationService and userManagementService
  */
 export const getUserByEmail = async (email: string): Promise<User | null> => {
     await delay(300);
-    return registeredUsers[email.toLowerCase()] || null;
+    // First check registered users in this service
+    const registeredUser = registeredUsers[email.toLowerCase()];
+    if (registeredUser) {
+        return registeredUser;
+    }
+    
+    // Then check userManagementService for additional users (including dual-role users)
+    try {
+        const { getUserByEmail: getUserByEmailFromManagement } = await import('./userManagementService');
+        const managedUser = await getUserByEmailFromManagement(email);
+        if (managedUser) {
+            return managedUser;
+        }
+    } catch {
+        // If import fails, just return null
+    }
+    
+    return null;
 };
 
 /**

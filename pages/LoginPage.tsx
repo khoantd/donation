@@ -29,7 +29,8 @@ const MOCK_ACCOUNTS: { donor: User; admin: User } = {
 const SAMPLE_RECIPIENTS = [
     { email: 'maria.rodriguez@example.com', name: 'Maria Rodriguez' },
     { email: 'james.thompson@example.com', name: 'James Thompson' },
-    { email: 'sarah.williams@example.com', name: 'Sarah Williams' },
+    { email: 'sarah.williams@example.com', name: 'Sarah Williams', label: 'Dual Role (Donor & Recipient)' },
+    { email: 'david.martinez@example.com', name: 'David Martinez', label: 'Dual Role (Donor & Recipient)' },
     { email: 'david.chen@example.com', name: 'David Chen' },
     { email: 'lisa.martinez@example.com', name: 'Lisa Martinez' },
 ];
@@ -104,15 +105,15 @@ const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
 
     return (
         <>
-            <div className="flex items-center justify-center" style={{ minHeight: 'calc(100vh - 128px)' }}>
-                <div className="max-w-md w-full bg-white p-8 rounded-xl shadow-lg text-center">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-2">Welcome!</h2>
-                    <p className="text-gray-600 mb-8">Sign in to continue your journey of giving.</p>
-                    <div className="space-y-4">
+            <div className="flex items-center justify-center min-h-[calc(100vh-128px)] sm:min-h-[calc(100vh-144px)]">
+                <div className="max-w-md w-full bg-white p-6 sm:p-8 rounded-xl shadow-lg text-center mx-2 sm:mx-0">
+                    <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Welcome!</h2>
+                    <p className="text-sm sm:text-base text-gray-600 mb-6 sm:mb-8">Sign in to continue your journey of giving.</p>
+                    <div className="space-y-3 sm:space-y-4">
                         <button
                             onClick={() => setIsModalOpen(true)}
                             disabled={loading}
-                            className="w-full inline-flex justify-center items-center py-3 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-base font-medium text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-all disabled:opacity-50"
+                            className="w-full inline-flex justify-center items-center py-3 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-base sm:text-base font-medium text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-all disabled:opacity-50 min-h-[44px]"
                         >
                             <GoogleIcon />
                             {loading ? 'Signing in...' : 'Sign in with Google'}
@@ -131,7 +132,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
                                 setIsModalOpen(true);
                             }}
                             disabled={loading}
-                            className="w-full py-3 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-base font-medium text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-all disabled:opacity-50"
+                            className="w-full py-3 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-base font-medium text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-all disabled:opacity-50 min-h-[44px]"
                         >
                             Sign in with Email
                         </button>
@@ -140,7 +141,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
                         <p className="text-sm text-gray-600 mb-4">Don't have an account?</p>
                         <button
                             onClick={() => onNavigate('recipient-registration')}
-                            className="w-full bg-teal-500 text-white py-3 px-4 rounded-lg hover:bg-teal-600 transition font-medium"
+                            className="w-full bg-teal-500 text-white py-3 px-4 rounded-lg hover:bg-teal-600 transition font-medium min-h-[44px]"
                         >
                             Create Account
                         </button>
@@ -149,83 +150,102 @@ const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
             </div>
 
             {isModalOpen && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-                    <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-sm">
+                <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-0 sm:p-4">
+                    <div className="bg-white rounded-none sm:rounded-lg shadow-xl p-4 sm:p-6 w-full h-full sm:h-auto sm:max-w-sm sm:max-h-[90vh] flex flex-col">
                         <div className="flex justify-between items-center mb-4">
-                            <h3 className="text-lg font-bold">
+                            <h3 className="text-lg sm:text-xl font-bold">
                                 {loginMode === 'quick' ? 'Choose an account' : 'Sign in with Email'}
                             </h3>
-                            <button onClick={() => {
-                                setIsModalOpen(false);
-                                setLoginMode('quick');
-                                setEmail('');
-                                setPassword('');
-                                setError(null);
-                            }} className="text-gray-500 hover:text-gray-800">&times;</button>
+                            <button 
+                                onClick={() => {
+                                    setIsModalOpen(false);
+                                    setLoginMode('quick');
+                                    setEmail('');
+                                    setPassword('');
+                                    setError(null);
+                                }} 
+                                className="text-gray-500 hover:text-gray-800 text-2xl sm:text-3xl font-light leading-none min-w-[44px] min-h-[44px] flex items-center justify-center"
+                                aria-label="Close modal"
+                            >
+                                &times;
+                            </button>
                         </div>
 
                         {loginMode === 'quick' ? (
                             <>
-                                <div className="space-y-3 max-h-96 overflow-y-auto">
+                                <div className="space-y-2 sm:space-y-3 max-h-[60vh] sm:max-h-96 overflow-y-auto flex-1">
                                     <div
                                         onClick={() => handleLogin('donor')}
-                                        className="flex items-center p-3 rounded-lg hover:bg-gray-100 cursor-pointer border"
+                                        className="flex items-center p-3 sm:p-4 rounded-lg hover:bg-gray-100 cursor-pointer border min-h-[60px] sm:min-h-[auto]"
                                     >
-                                        <img src={MOCK_ACCOUNTS.donor.avatarUrl} alt="Donor" className="w-10 h-10 rounded-full" />
-                                        <div className="ml-3">
-                                            <p className="font-semibold text-gray-800">{MOCK_ACCOUNTS.donor.name}</p>
-                                            <p className="text-sm text-gray-500">{MOCK_ACCOUNTS.donor.email}</p>
-                                            <p className="text-xs text-teal-600">Donor</p>
+                                        <img src={MOCK_ACCOUNTS.donor.avatarUrl} alt="Donor" className="w-12 h-12 sm:w-10 sm:h-10 rounded-full flex-shrink-0" />
+                                        <div className="ml-3 flex-1 min-w-0">
+                                            <p className="font-semibold text-sm sm:text-base text-gray-800 truncate">{MOCK_ACCOUNTS.donor.name}</p>
+                                            <p className="text-xs sm:text-sm text-gray-500 truncate">{MOCK_ACCOUNTS.donor.email}</p>
+                                            <p className="text-xs text-teal-600 mt-0.5">Donor</p>
                                         </div>
                                     </div>
                                     <div
                                         onClick={() => handleLogin('admin')}
-                                        className="flex items-center p-3 rounded-lg hover:bg-gray-100 cursor-pointer border"
+                                        className="flex items-center p-3 sm:p-4 rounded-lg hover:bg-gray-100 cursor-pointer border min-h-[60px] sm:min-h-[auto]"
                                     >
-                                        <img src={MOCK_ACCOUNTS.admin.avatarUrl} alt="Admin" className="w-10 h-10 rounded-full" />
-                                        <div className="ml-3">
-                                            <p className="font-semibold text-gray-800">{MOCK_ACCOUNTS.admin.name}</p>
-                                            <p className="text-sm text-gray-500">{MOCK_ACCOUNTS.admin.email}</p>
-                                            <p className="text-xs text-red-600">Admin</p>
+                                        <img src={MOCK_ACCOUNTS.admin.avatarUrl} alt="Admin" className="w-12 h-12 sm:w-10 sm:h-10 rounded-full flex-shrink-0" />
+                                        <div className="ml-3 flex-1 min-w-0">
+                                            <p className="font-semibold text-sm sm:text-base text-gray-800 truncate">{MOCK_ACCOUNTS.admin.name}</p>
+                                            <p className="text-xs sm:text-sm text-gray-500 truncate">{MOCK_ACCOUNTS.admin.email}</p>
+                                            <p className="text-xs text-red-600 mt-0.5">Admin</p>
                                         </div>
                                     </div>
                                     
                                     {/* Recipient Accounts */}
                                     <div className="border-t border-gray-200 pt-3 mt-3">
                                         <p className="text-sm font-medium text-gray-700 mb-2">Recipient Accounts:</p>
-                                        {(showAllRecipients ? recipientUsers : recipientUsers.slice(0, 2)).map((recipient) => (
-                                            <div
-                                                key={recipient.id}
-                                                onClick={() => handleLogin('recipient', recipient.email)}
-                                                className="flex items-center p-3 rounded-lg hover:bg-gray-100 cursor-pointer border mb-2"
-                                            >
-                                                <img src={recipient.avatarUrl} alt={recipient.name} className="w-10 h-10 rounded-full" />
-                                                <div className="ml-3 flex-1">
-                                                    <p className="font-semibold text-gray-800">{recipient.name}</p>
-                                                    <p className="text-sm text-gray-500">{recipient.email}</p>
-                                                    <p className="text-xs text-teal-600">
-                                                        {recipient.verified ? '✓ Verified' : '⏳ Pending'}
-                                                    </p>
+                                        {(showAllRecipients ? recipientUsers : recipientUsers.slice(0, 2)).map((recipient) => {
+                                            const isDualRole = recipient.roles?.includes('donor') && recipient.roles?.includes('recipient');
+                                            const sampleRecipient = SAMPLE_RECIPIENTS.find(r => r.email === recipient.email);
+                                            return (
+                                                <div
+                                                    key={recipient.id}
+                                                    onClick={() => handleLogin('recipient', recipient.email)}
+                                                    className="flex items-center p-3 sm:p-4 rounded-lg hover:bg-gray-100 cursor-pointer border mb-2 min-h-[60px] sm:min-h-[auto]"
+                                                >
+                                                    <img src={recipient.avatarUrl} alt={recipient.name} className="w-12 h-12 sm:w-10 sm:h-10 rounded-full flex-shrink-0" />
+                                                    <div className="ml-3 flex-1 min-w-0">
+                                                        <p className="font-semibold text-sm sm:text-base text-gray-800 truncate">{recipient.name}</p>
+                                                        <p className="text-xs sm:text-sm text-gray-500 truncate">{recipient.email}</p>
+                                                        <div className="flex items-center gap-2 mt-1 flex-wrap">
+                                                            {isDualRole && (
+                                                                <p className="text-xs text-purple-600 font-medium">
+                                                                    👥 Dual Role
+                                                                </p>
+                                                            )}
+                                                            <p className="text-xs text-teal-600">
+                                                                {recipient.verified || recipient.verificationStatus === 'verified' ? '✓ Verified' : '⏳ Pending'}
+                                                            </p>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        ))}
+                                            );
+                                        })}
                                         {recipientUsers.length > 2 && (
                                             <button
                                                 onClick={() => setShowAllRecipients(!showAllRecipients)}
-                                                className="text-sm text-teal-600 hover:text-teal-800 font-medium w-full text-left py-2"
+                                                className="text-sm text-teal-600 hover:text-teal-800 font-medium w-full text-left py-2 min-h-[44px]"
                                             >
                                                 {showAllRecipients ? 'Show Less' : `Show ${recipientUsers.length - 2} More Recipients`}
                                             </button>
                                         )}
                                     </div>
                                 </div>
-                                <p className="text-xs text-gray-400 mt-4 text-center">This is a simulated sign-in. Click an account to proceed.</p>
-                                <p className="text-xs text-gray-400 mt-2 text-center">
-                                    <strong>Tip:</strong> Sample recipients can also login with email/password. Use any password.
-                                </p>
+                                <div className="mt-auto pt-4">
+                                    <p className="text-xs text-gray-400 text-center">This is a simulated sign-in. Click an account to proceed.</p>
+                                    <p className="text-xs text-gray-400 mt-2 text-center">
+                                        <strong>Tip:</strong> Sample recipients can also login with email/password. Use any password.
+                                    </p>
+                                </div>
                             </>
                         ) : (
-                            <form onSubmit={handleCredentialsLogin} className="space-y-4">
+                            <form onSubmit={handleCredentialsLogin} className="space-y-4 flex-1 flex flex-col">
                                 {error && (
                                     <div className="bg-red-100 border border-red-400 text-red-800 px-4 py-3 rounded-md text-sm" role="alert">
                                         {error}
@@ -245,7 +265,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
                                             setEmail(e.target.value);
                                             setError(null);
                                         }}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500"
+                                        className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-base sm:text-sm min-h-[44px]"
                                         placeholder="Enter your email"
                                         required
                                     />
@@ -259,7 +279,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
                                             setPassword(e.target.value);
                                             setError(null);
                                         }}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500"
+                                        className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-base sm:text-sm min-h-[44px]"
                                         placeholder="Enter your password (any password for demo)"
                                         required
                                     />
@@ -267,26 +287,28 @@ const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
                                         For sample accounts, use any password (e.g., "password123")
                                     </p>
                                 </div>
-                                <button
-                                    type="submit"
-                                    disabled={loading}
-                                    className="w-full bg-teal-500 text-white py-2 px-4 rounded-md hover:bg-teal-600 transition font-medium disabled:bg-teal-300 disabled:cursor-not-allowed"
-                                >
-                                    {loading ? 'Signing in...' : 'Sign In'}
-                                </button>
-                                <p className="text-xs text-gray-500 text-center mt-4">
-                                    Don't have an account?{' '}
+                                <div className="mt-auto pt-4">
                                     <button
-                                        type="button"
-                                        onClick={() => {
-                                            setIsModalOpen(false);
-                                            onNavigate('recipient-registration');
-                                        }}
-                                        className="text-teal-600 hover:text-teal-800 underline"
+                                        type="submit"
+                                        disabled={loading}
+                                        className="w-full bg-teal-500 text-white py-3 px-4 rounded-md hover:bg-teal-600 transition font-medium disabled:bg-teal-300 disabled:cursor-not-allowed min-h-[44px]"
                                     >
-                                        Register here
+                                        {loading ? 'Signing in...' : 'Sign In'}
                                     </button>
-                                </p>
+                                    <p className="text-xs text-gray-500 text-center mt-4">
+                                        Don't have an account?{' '}
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setIsModalOpen(false);
+                                                onNavigate('recipient-registration');
+                                            }}
+                                            className="text-teal-600 hover:text-teal-800 underline min-h-[44px]"
+                                        >
+                                            Register here
+                                        </button>
+                                    </p>
+                                </div>
                             </form>
                         )}
                     </div>

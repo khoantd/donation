@@ -203,21 +203,21 @@ const DonationDetailsModal: React.FC<DonationDetailsModalProps> = ({
         <>
             {/* Modal Overlay */}
             <div
-                className="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-4"
+                className="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-0 sm:p-4"
                 onClick={onClose}
                 aria-modal="true"
                 role="dialog"
             >
                 <div
-                    className="bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] flex flex-col relative"
+                    className="bg-white rounded-none sm:rounded-lg shadow-xl w-full h-full sm:h-auto sm:max-w-4xl sm:max-h-[90vh] flex flex-col relative"
                     onClick={(e) => e.stopPropagation()}
                 >
                     {/* Header */}
-                    <div className="p-6 border-b flex justify-between items-center sticky top-0 bg-white z-10">
-                        <h2 className="text-2xl font-bold text-gray-900">{donation.itemName}</h2>
+                    <div className="p-4 sm:p-6 border-b flex justify-between items-center sticky top-0 bg-white z-10">
+                        <h2 className="text-lg sm:text-2xl font-bold text-gray-900 pr-2 truncate flex-1">{donation.itemName}</h2>
                         <button
                             onClick={onClose}
-                            className="text-gray-500 hover:text-gray-800 text-3xl font-light leading-none transition"
+                            className="text-gray-500 hover:text-gray-800 text-2xl sm:text-3xl font-light leading-none transition min-w-[44px] min-h-[44px] flex items-center justify-center flex-shrink-0"
                             aria-label="Close modal"
                         >
                             &times;
@@ -225,11 +225,11 @@ const DonationDetailsModal: React.FC<DonationDetailsModalProps> = ({
                     </div>
 
                     {/* Content */}
-                    <div className="p-6 space-y-6 overflow-y-auto flex-1">
+                    <div className="p-4 sm:p-6 space-y-4 sm:space-y-6 overflow-y-auto flex-1">
                         {/* Images Gallery Section */}
                         {allImages.length > 0 && (
-                            <div className="space-y-4">
-                                <h3 className="text-lg font-semibold text-gray-800">Images</h3>
+                            <div className="space-y-3 sm:space-y-4">
+                                <h3 className="text-base sm:text-lg font-semibold text-gray-800">Images</h3>
                                 <div className="relative bg-gray-100 rounded-lg overflow-hidden">
                                     <div className="aspect-video relative group">
                                         <img
@@ -252,7 +252,7 @@ const DonationDetailsModal: React.FC<DonationDetailsModalProps> = ({
                                                 {currentImageIndex > 0 && (
                                                     <button
                                                         onClick={() => setCurrentImageIndex(prev => prev - 1)}
-                                                        className="absolute left-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-60 hover:bg-opacity-80 text-white rounded-full p-2 transition"
+                                                        className="absolute left-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-60 hover:bg-opacity-80 text-white rounded-full p-2 sm:p-2.5 transition min-w-[44px] min-h-[44px] flex items-center justify-center"
                                                         aria-label="Previous image"
                                                     >
                                                         <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -263,7 +263,7 @@ const DonationDetailsModal: React.FC<DonationDetailsModalProps> = ({
                                                 {currentImageIndex < allImages.length - 1 && (
                                                     <button
                                                         onClick={() => setCurrentImageIndex(prev => prev + 1)}
-                                                        className="absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-60 hover:bg-opacity-80 text-white rounded-full p-2 transition"
+                                                        className="absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-60 hover:bg-opacity-80 text-white rounded-full p-2 sm:p-2.5 transition min-w-[44px] min-h-[44px] flex items-center justify-center"
                                                         aria-label="Next image"
                                                     >
                                                         <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -307,11 +307,11 @@ const DonationDetailsModal: React.FC<DonationDetailsModalProps> = ({
                         )}
 
                         {/* Details Grid */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                             {/* Left Column */}
-                            <div className="space-y-6">
+                            <div className="space-y-4 sm:space-y-6">
                                 <div>
-                                    <h3 className="text-lg font-semibold text-gray-800 mb-3">Details</h3>
+                                    <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-2 sm:mb-3">Details</h3>
                                     <div className="space-y-2 text-sm">
                                         <p><strong>Category:</strong> {donation.category}</p>
                                         <p>
@@ -364,13 +364,13 @@ const DonationDetailsModal: React.FC<DonationDetailsModalProps> = ({
                                 </div>
 
                                 <div>
-                                    <h3 className="text-lg font-semibold text-gray-800 mb-3">Description</h3>
+                                    <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-2 sm:mb-3">Description</h3>
                                     <p className="text-sm text-gray-700">{donation.description}</p>
                                 </div>
 
                                 {(isAdmin || donation.donorId === user?.id) && (
-                                    <div className="p-4 bg-gray-50 rounded-md border">
-                                        <h4 className="text-base font-semibold text-gray-800 mb-2">Donor Information</h4>
+                                    <div className="p-3 sm:p-4 bg-gray-50 rounded-md border">
+                                        <h4 className="text-sm sm:text-base font-semibold text-gray-800 mb-2">Donor Information</h4>
                                         <div className="space-y-1 text-sm text-gray-600">
                                             <p><strong>Name:</strong> {donation.donorName}</p>
                                             <p><strong>Phone:</strong> {donation.donorPhoneNumber}</p>
@@ -381,10 +381,10 @@ const DonationDetailsModal: React.FC<DonationDetailsModalProps> = ({
                             </div>
 
                             {/* Right Column */}
-                            <div className="space-y-6">
+                            <div className="space-y-4 sm:space-y-6">
                                 {/* Status Timeline */}
                                 <div>
-                                    <h3 className="text-lg font-semibold text-gray-800 mb-3">Status Timeline</h3>
+                                    <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-2 sm:mb-3">Status Timeline</h3>
                                     <div className="space-y-3">
                                         {statusTimeline.map((item, index) => (
                                             <div key={index} className="flex items-start gap-3">
@@ -415,7 +415,7 @@ const DonationDetailsModal: React.FC<DonationDetailsModalProps> = ({
                                 {/* Action History (Admin Only) */}
                                 {isAdmin && donation.actionHistory && donation.actionHistory.length > 0 && (
                                     <div>
-                                        <h3 className="text-lg font-semibold text-gray-800 mb-3">Action History</h3>
+                                        <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-2 sm:mb-3">Action History</h3>
                                         <div className="space-y-2 max-h-48 overflow-y-auto">
                                             {donation.actionHistory.map((action) => (
                                                 <div key={action.id} className="p-3 bg-gray-50 rounded border text-sm">
@@ -451,9 +451,9 @@ const DonationDetailsModal: React.FC<DonationDetailsModalProps> = ({
 
                                 {/* Admin Notes (Admin Only - Private) */}
                                 {isAdmin && (
-                                    <div className="border-t pt-6 mt-6">
-                                        <div className="flex items-center justify-between mb-3">
-                                            <h3 className="text-lg font-semibold text-gray-800">
+                                    <div className="border-t pt-4 sm:pt-6 mt-4 sm:mt-6">
+                                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 mb-3">
+                                            <h3 className="text-base sm:text-lg font-semibold text-gray-800">
                                                 Admin Notes
                                                 <span className="ml-2 text-xs font-normal text-gray-500 bg-red-100 text-red-700 px-2 py-0.5 rounded">
                                                     Private
@@ -462,7 +462,7 @@ const DonationDetailsModal: React.FC<DonationDetailsModalProps> = ({
                                             {!isAddingNote && (
                                                 <button
                                                     onClick={() => setIsAddingNote(true)}
-                                                    className="text-sm text-teal-600 hover:text-teal-800 font-medium flex items-center gap-1"
+                                                    className="text-sm text-teal-600 hover:text-teal-800 font-medium flex items-center gap-1 min-h-[44px] px-2"
                                                 >
                                                     <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -590,19 +590,19 @@ const DonationDetailsModal: React.FC<DonationDetailsModalProps> = ({
 
                     {/* Footer Actions (Admin Only) */}
                     {isAdmin && onStatusUpdate && (
-                        <div className="p-6 bg-gray-50 border-t mt-auto">
-                            <h3 className="text-lg font-semibold text-gray-800 mb-3">Actions</h3>
+                        <div className="p-4 sm:p-6 bg-gray-50 border-t mt-auto">
+                            <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-3">Actions</h3>
                             {donation.status === DonationStatus.PENDING && (
-                                <div className="flex space-x-3">
+                                <div className="flex flex-col sm:flex-row gap-2 sm:space-x-3 sm:gap-0">
                                     <button
                                         onClick={() => onStatusUpdate(donation.id, DonationStatus.APPROVED)}
-                                        className="flex-1 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition"
+                                        className="flex-1 px-4 py-3 sm:py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition min-h-[44px] font-medium"
                                     >
                                         Approve
                                     </button>
                                     <button
                                         onClick={() => onStatusUpdate(donation.id, DonationStatus.REJECTED)}
-                                        className="flex-1 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition"
+                                        className="flex-1 px-4 py-3 sm:py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition min-h-[44px] font-medium"
                                     >
                                         Reject
                                     </button>
@@ -611,7 +611,7 @@ const DonationDetailsModal: React.FC<DonationDetailsModalProps> = ({
                             {donation.status === DonationStatus.APPROVED && (
                                 <button
                                     onClick={() => onStatusUpdate(donation.id, DonationStatus.DELIVERED)}
-                                    className="w-full px-4 py-2 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition"
+                                    className="w-full px-4 py-3 sm:py-2 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition min-h-[44px] font-medium"
                                 >
                                     Mark as Delivered
                                 </button>
@@ -624,22 +624,22 @@ const DonationDetailsModal: React.FC<DonationDetailsModalProps> = ({
             {/* Image Zoom Modal */}
             {isImageZoomed && currentImage && (
                 <div
-                    className="fixed inset-0 bg-black bg-opacity-90 z-[60] flex items-center justify-center p-4"
+                    className="fixed inset-0 bg-black bg-opacity-90 z-[60] flex items-center justify-center p-2 sm:p-4"
                     onClick={() => setIsImageZoomed(false)}
                 >
                     <div className="relative max-w-7xl max-h-full">
                         <img
                             src={currentImage}
                             alt={`${donation.itemName} - Zoomed`}
-                            className="max-w-full max-h-[90vh] object-contain"
+                            className="max-w-full max-h-[95vh] sm:max-h-[90vh] object-contain"
                             onClick={(e) => e.stopPropagation()}
                         />
                         <button
                             onClick={() => setIsImageZoomed(false)}
-                            className="absolute top-4 right-4 bg-white bg-opacity-80 hover:bg-opacity-100 text-gray-800 rounded-full p-2 transition"
+                            className="absolute top-2 right-2 sm:top-4 sm:right-4 bg-white bg-opacity-80 hover:bg-opacity-100 text-gray-800 rounded-full p-2 sm:p-2.5 transition min-w-[44px] min-h-[44px] flex items-center justify-center"
                             aria-label="Close zoom"
                         >
-                            <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <svg className="h-5 w-5 sm:h-6 sm:w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                 <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
                             </svg>
                         </button>
@@ -651,10 +651,10 @@ const DonationDetailsModal: React.FC<DonationDetailsModalProps> = ({
                                             e.stopPropagation();
                                             setCurrentImageIndex(prev => prev - 1);
                                         }}
-                                        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 text-gray-800 rounded-full p-3 transition"
+                                        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 text-gray-800 rounded-full p-2.5 sm:p-3 transition min-w-[44px] min-h-[44px] flex items-center justify-center"
                                         aria-label="Previous image"
                                     >
-                                        <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <svg className="h-5 w-5 sm:h-6 sm:w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                             <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
                                         </svg>
                                     </button>
@@ -665,17 +665,17 @@ const DonationDetailsModal: React.FC<DonationDetailsModalProps> = ({
                                             e.stopPropagation();
                                             setCurrentImageIndex(prev => prev + 1);
                                         }}
-                                        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 text-gray-800 rounded-full p-3 transition"
+                                        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 text-gray-800 rounded-full p-2.5 sm:p-3 transition min-w-[44px] min-h-[44px] flex items-center justify-center"
                                         aria-label="Next image"
                                     >
-                                        <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <svg className="h-5 w-5 sm:h-6 sm:w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                             <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
                                         </svg>
                                     </button>
                                 )}
                             </>
                         )}
-                        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black bg-opacity-60 text-white text-sm px-3 py-1 rounded">
+                        <div className="absolute bottom-2 sm:bottom-4 left-1/2 -translate-x-1/2 bg-black bg-opacity-60 text-white text-xs sm:text-sm px-2 sm:px-3 py-1 rounded">
                             {currentImageIndex + 1} / {allImages.length}
                         </div>
                     </div>

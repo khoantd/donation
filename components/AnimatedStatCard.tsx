@@ -71,7 +71,7 @@ const AnimatedStatCard: React.FC<AnimatedStatCardProps> = ({
     return (
         <article
             ref={ref}
-            className={`bg-gradient-to-br ${gradient} rounded-lg shadow-lg p-6 text-white transform transition-all duration-700 ${
+            className={`bg-gradient-to-br ${gradient} rounded-lg shadow-lg p-4 sm:p-6 text-white transform transition-all duration-700 ${
                 isVisible
                     ? 'opacity-100 translate-y-0'
                     : 'opacity-0 translate-y-8'
@@ -82,19 +82,19 @@ const AnimatedStatCard: React.FC<AnimatedStatCardProps> = ({
             role="region"
             aria-label={`${title}: ${fullFormattedValue}`}
         >
-            <div className="flex items-center justify-between mb-4">
-                <h3 className="text-white/80 text-sm font-medium">{title}</h3>
-                <div className="text-white/60" aria-hidden="true">{icon}</div>
+            <div className="flex items-center justify-between mb-3 sm:mb-4">
+                <h3 className="text-white/80 text-xs sm:text-sm font-medium">{title}</h3>
+                <div className="text-white/60 flex-shrink-0" aria-hidden="true">{icon}</div>
             </div>
             <div 
-                className="text-4xl md:text-5xl font-bold mb-2"
+                className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2"
                 aria-live="polite"
                 aria-atomic="true"
             >
                 {fullFormattedValue}
             </div>
             {description && (
-                <p className="text-white/80 text-sm mt-2">{description}</p>
+                <p className="text-white/80 text-xs sm:text-sm mt-2">{description}</p>
             )}
         </article>
     );

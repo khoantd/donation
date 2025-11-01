@@ -39,8 +39,8 @@ const DonationCard: React.FC<DonationCardProps> = ({ donation, isAdmin, onManage
             className="bg-white rounded-lg shadow-md overflow-hidden transition-shadow duration-300 hover:shadow-xl cursor-pointer"
             onClick={() => onViewDetails && onViewDetails(donation)}
         >
-            <div className="flex flex-col md:flex-row">
-                <div className="relative h-48 w-full md:h-auto md:w-48 overflow-hidden bg-gray-100">
+            <div className="flex flex-col sm:flex-row">
+                <div className="relative h-48 sm:h-40 w-full sm:w-48 lg:w-56 overflow-hidden bg-gray-100 flex-shrink-0">
                     <img 
                         className="h-full w-full object-cover" 
                         src={getCurrentImage()} 
@@ -108,43 +108,43 @@ const DonationCard: React.FC<DonationCardProps> = ({ donation, isAdmin, onManage
                         </>
                     )}
                 </div>
-                <div className="p-6 flex flex-col justify-between flex-grow">
+                <div className="p-4 sm:p-6 flex flex-col justify-between flex-grow min-w-0">
                     <div>
-                        <div className="flex justify-between items-start">
-                             <h3 className="text-xl font-bold text-gray-900">{donation.itemName}</h3>
-                             <span className={`text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full ${getStatusColor(donation.status)}`}>
+                        <div className="flex justify-between items-start gap-2 mb-2">
+                             <h3 className="text-lg sm:text-xl font-bold text-gray-900 truncate flex-1">{donation.itemName}</h3>
+                             <span className={`text-xs font-semibold px-2 sm:px-2.5 py-0.5 rounded-full whitespace-nowrap flex-shrink-0 ${getStatusColor(donation.status)}`}>
                                  {donation.status}
                              </span>
                         </div>
-                        <p className="text-sm text-gray-500 mb-1">
+                        <p className="text-xs sm:text-sm text-gray-500 mb-2">
                             Category: {donation.category} | Quantity: <span className="font-semibold">{donation.quantity}</span>
                         </p>
-                        <p className="text-gray-700 mt-2 text-sm">{donation.description}</p>
+                        <p className="text-gray-700 mt-2 text-xs sm:text-sm line-clamp-2 sm:line-clamp-none">{donation.description}</p>
                     </div>
 
                     {isAdmin && (
-                         <div className="mt-4 p-3 bg-gray-50 rounded-md border text-sm text-gray-600 space-y-1">
-                            <h4 className="text-sm font-semibold text-gray-800 mb-2">Donor Information</h4>
-                            <p><strong>Name:</strong> {donation.donorName}</p>
-                            <p><strong>Phone:</strong> {donation.donorPhoneNumber}</p>
-                            <p><strong>Address:</strong> {donation.donorAddress}</p>
+                         <div className="mt-3 sm:mt-4 p-3 bg-gray-50 rounded-md border text-xs sm:text-sm text-gray-600 space-y-1">
+                            <h4 className="text-xs sm:text-sm font-semibold text-gray-800 mb-2">Donor Information</h4>
+                            <p className="truncate"><strong>Name:</strong> {donation.donorName}</p>
+                            <p className="truncate"><strong>Phone:</strong> {donation.donorPhoneNumber}</p>
+                            <p className="line-clamp-2"><strong>Address:</strong> {donation.donorAddress}</p>
                         </div>
                     )}
                     
-                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mt-4">
-                        <div className="text-sm text-gray-500">
-                             {!isAdmin && <p>Donated by: {donation.donorName}</p>}
+                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mt-3 sm:mt-4 gap-3">
+                        <div className="text-xs sm:text-sm text-gray-500">
+                             {!isAdmin && <p className="truncate">Donated by: {donation.donorName}</p>}
                              <p>Submitted: {donation.submittedAt.toLocaleDateString()}</p>
                         </div>
                         
-                        <div className="mt-4 sm:mt-0 flex gap-2">
+                        <div className="flex gap-2 w-full sm:w-auto">
                             {onViewDetails && (
                                 <button
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         onViewDetails(donation);
                                     }}
-                                    className="px-4 py-2 bg-teal-500 text-white text-sm font-semibold rounded-md hover:bg-teal-600 transition shadow"
+                                    className="flex-1 sm:flex-none px-4 py-2.5 sm:py-2 bg-teal-500 text-white text-sm font-semibold rounded-md hover:bg-teal-600 transition shadow min-h-[44px]"
                                 >
                                     View Details
                                 </button>
@@ -155,7 +155,7 @@ const DonationCard: React.FC<DonationCardProps> = ({ donation, isAdmin, onManage
                                         e.stopPropagation();
                                         onManage(donation);
                                     }}
-                                    className="px-4 py-2 bg-blue-500 text-white text-sm font-semibold rounded-md hover:bg-blue-600 transition shadow"
+                                    className="flex-1 sm:flex-none px-4 py-2.5 sm:py-2 bg-blue-500 text-white text-sm font-semibold rounded-md hover:bg-blue-600 transition shadow min-h-[44px]"
                                 >
                                     Manage
                                 </button>

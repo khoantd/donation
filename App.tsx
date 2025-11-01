@@ -14,15 +14,17 @@ import ImpactStories from './pages/ImpactStories';
 import DonorManagement from './pages/DonorManagement';
 import RecipientRegistration from './pages/RecipientRegistration';
 import MatchingPage from './pages/MatchingPage';
+import MasterDataManagement from './pages/MasterDataManagement';
+import UserManagement from './pages/UserManagement';
 
-type Page = 'home' | 'donate' | 'history' | 'admin' | 'login' | 'profile' | 'impact' | 'donor-management' | 'recipient-registration' | 'request-items' | 'matching';
+type Page = 'home' | 'donate' | 'history' | 'admin' | 'login' | 'profile' | 'impact' | 'donor-management' | 'recipient-registration' | 'request-items' | 'matching' | 'master-data' | 'user-management';
 
 const AppContent: React.FC = () => {
     const [currentPage, setCurrentPage] = useState<Page>('home');
     const { user, loading } = useAuth();
 
     const navigate = (page: Page) => {
-        if (!user && (page === 'donate' || page === 'history' || page === 'admin' || page === 'profile' || page === 'donor-management' || page === 'request-items' || page === 'matching')) {
+        if (!user && (page === 'donate' || page === 'history' || page === 'admin' || page === 'profile' || page === 'donor-management' || page === 'request-items' || page === 'matching' || page === 'master-data' || page === 'user-management')) {
             setCurrentPage('login');
         } else {
             setCurrentPage(page);
@@ -78,6 +80,10 @@ const AppContent: React.FC = () => {
                 return user.role === 'admin' ? <DonorManagement /> : <HomePage onNavigate={navigate} />;
             case 'matching':
                 return user.role === 'admin' ? <MatchingPage /> : <HomePage onNavigate={navigate} />;
+            case 'master-data':
+                return user.role === 'admin' ? <MasterDataManagement /> : <HomePage onNavigate={navigate} />;
+            case 'user-management':
+                return user.role === 'admin' ? <UserManagement /> : <HomePage onNavigate={navigate} />;
             case 'request-items':
                 if (user.role === 'recipient' || user.roles?.includes('recipient')) {
                     return <RequestItemsPage />;
@@ -97,7 +103,7 @@ const AppContent: React.FC = () => {
     return (
         <div className="bg-gray-50 min-h-screen font-sans text-gray-800 flex flex-col">
             <Header onNavigate={navigate} currentPage={currentPage} />
-            <main className="p-4 md:p-8 flex-grow">
+            <main className="p-2 sm:p-4 md:p-6 lg:p-8 flex-grow">
                 {renderPage()}
             </main>
             <Footer onNavigate={navigate} />

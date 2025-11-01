@@ -1,7 +1,8 @@
 
-import React, { createContext, useState, useContext, ReactNode } from 'react';
+import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 import { User } from '../types';
 import { loginUser, getUserByEmail } from '../services/recipientRegistrationService';
+import { getRoleForUser } from '../services/masterDataService';
 
 interface AuthContextType {
     user: User | null;
@@ -28,6 +29,8 @@ const MOCK_ADMIN_USER: User = {
     email: 'admin@charityconnect.com',
     avatarUrl: 'https://i.pravatar.cc/150?u=admin@charityconnect.com',
     role: 'admin',
+    roleId: 'role-1', // Administrator role from master data system
+    verified: true,
 };
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -39,7 +42,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         // Simulate an API call for quick login (demo mode)
         setTimeout(async () => {
             if (role === 'admin') {
-                setUser(MOCK_ADMIN_USER);
+                // Ensure admin user has the Administrator role assigned
+                const adminUser: User = {
+                    ...MOCK_ADMIN_USER,
+                    roleId: 'role-1', // Administrator role from master data system
+                };
+                setUser(adminUser);
             } else if (role === 'recipient') {
                 // If email is provided, try to get the actual user from sample data
                 if (email) {
@@ -103,6 +111,19 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         setLoading(true);
         try {
             const loggedInUser = await loginUser(email, password);
+            
+            // Assign system role based on user's primary role if not already assigned
+            if (!loggedInUser.roleId && loggedInUser.role) {
+                try {
+                    const roleId = await getRoleForUser(loggedInUser.role);
+                    if (roleId) {
+                        loggedInUser.roleId = roleId;
+                    }
+                } catch (error) {
+                    console.warn('Failed to assign role to user:', error);
+                }
+            }
+            
             setUser(loggedInUser);
         } catch (error) {
             throw error; // Let the component handle the error

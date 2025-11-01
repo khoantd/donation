@@ -731,18 +731,19 @@ const DonorManagement: React.FC = () => {
             </div>
 
             {/* Donors List */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+            {/* Desktop Table View */}
+            <div className="hidden md:block bg-white rounded-lg shadow-md overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-sm text-left text-gray-500">
                         <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                             <tr>
-                                <th scope="col" className="px-6 py-3">Donor</th>
-                                <th scope="col" className="px-6 py-3">Tags</th>
-                                <th scope="col" className="px-6 py-3">Total Donations</th>
-                                <th scope="col" className="px-6 py-3">Items Delivered</th>
-                                <th scope="col" className="px-6 py-3">Last Donation</th>
-                                <th scope="col" className="px-6 py-3">Contact</th>
-                                <th scope="col" className="px-6 py-3">Actions</th>
+                                <th scope="col" className="px-4 sm:px-6 py-3">Donor</th>
+                                <th scope="col" className="px-4 sm:px-6 py-3">Tags</th>
+                                <th scope="col" className="px-4 sm:px-6 py-3">Total Donations</th>
+                                <th scope="col" className="px-4 sm:px-6 py-3">Items Delivered</th>
+                                <th scope="col" className="px-4 sm:px-6 py-3">Last Donation</th>
+                                <th scope="col" className="px-4 sm:px-6 py-3">Contact</th>
+                                <th scope="col" className="px-4 sm:px-6 py-3">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -755,11 +756,11 @@ const DonorManagement: React.FC = () => {
                             ) : (
                                 filteredDonors.map(donor => (
                                     <tr key={donor.donorId} className="bg-white border-b hover:bg-gray-50">
-                                        <td className="px-6 py-4">
+                                        <td className="px-4 sm:px-6 py-4">
                                             <div className="font-medium text-gray-900">{donor.donorName}</div>
                                             <div className="text-xs text-gray-500">{donor.donorAddress}</div>
                                         </td>
-                                        <td className="px-6 py-4">
+                                        <td className="px-4 sm:px-6 py-4">
                                             <div className="flex flex-wrap gap-1">
                                                 {donor.tags.length === 0 ? (
                                                     <span className="text-gray-400 text-xs">No tags</span>
@@ -778,24 +779,24 @@ const DonorManagement: React.FC = () => {
                                                 )}
                                             </div>
                                         </td>
-                                        <td className="px-6 py-4 font-semibold text-gray-900">
+                                        <td className="px-4 sm:px-6 py-4 font-semibold text-gray-900">
                                             {donor.statistics.totalDonations}
                                         </td>
-                                        <td className="px-6 py-4 font-semibold text-green-700">
+                                        <td className="px-4 sm:px-6 py-4 font-semibold text-green-700">
                                             {donor.statistics.deliveredItems}
                                         </td>
-                                        <td className="px-6 py-4 text-gray-600">
+                                        <td className="px-4 sm:px-6 py-4 text-gray-600">
                                             {donor.statistics.lastDonationDate
                                                 ? donor.statistics.lastDonationDate.toLocaleDateString()
                                                 : 'Never'}
                                         </td>
-                                        <td className="px-6 py-4 text-gray-600">
+                                        <td className="px-4 sm:px-6 py-4 text-gray-600">
                                             <div className="text-xs">{donor.donorPhoneNumber}</div>
                                         </td>
-                                        <td className="px-6 py-4">
+                                        <td className="px-4 sm:px-6 py-4">
                                             <button
                                                 onClick={() => handleSelectDonor(donor)}
-                                                className="text-teal-600 hover:text-teal-800 font-medium text-sm"
+                                                className="text-teal-600 hover:text-teal-800 font-medium text-sm min-h-[44px] px-2"
                                             >
                                                 View Profile
                                             </button>
@@ -807,22 +808,86 @@ const DonorManagement: React.FC = () => {
                     </table>
                 </div>
             </div>
+            {/* Mobile Card View */}
+            <div className="md:hidden space-y-4">
+                {filteredDonors.length === 0 ? (
+                    <div className="bg-white rounded-lg shadow-md p-8 text-center">
+                        <p className="text-gray-500">No donors found.</p>
+                    </div>
+                ) : (
+                    filteredDonors.map(donor => (
+                        <div key={donor.donorId} className="bg-white rounded-lg shadow-md p-4 border border-gray-200">
+                            <div className="mb-3">
+                                <h3 className="text-base font-semibold text-gray-900 mb-1">{donor.donorName}</h3>
+                                <p className="text-xs text-gray-500">{donor.donorAddress}</p>
+                                {donor.donorPhoneNumber && (
+                                    <p className="text-xs text-gray-600 mt-1">{donor.donorPhoneNumber}</p>
+                                )}
+                            </div>
+                            <div className="grid grid-cols-2 gap-3 mb-3 text-sm">
+                                <div>
+                                    <span className="text-gray-600 text-xs block mb-1">Total Donations</span>
+                                    <span className="font-semibold text-gray-900">{donor.statistics.totalDonations}</span>
+                                </div>
+                                <div>
+                                    <span className="text-gray-600 text-xs block mb-1">Items Delivered</span>
+                                    <span className="font-semibold text-green-700">{donor.statistics.deliveredItems}</span>
+                                </div>
+                                <div>
+                                    <span className="text-gray-600 text-xs block mb-1">Last Donation</span>
+                                    <span className="text-gray-900 text-xs">
+                                        {donor.statistics.lastDonationDate
+                                            ? donor.statistics.lastDonationDate.toLocaleDateString()
+                                            : 'Never'}
+                                    </span>
+                                </div>
+                            </div>
+                            {donor.tags.length > 0 && (
+                                <div className="mb-3 pt-3 border-t border-gray-200">
+                                    <span className="text-gray-600 text-xs block mb-2">Tags</span>
+                                    <div className="flex flex-wrap gap-1">
+                                        {donor.tags.slice(0, 4).map(tag => (
+                                            <span
+                                                key={tag.id}
+                                                className={`${tag.color} text-white px-2 py-0.5 rounded text-xs`}
+                                            >
+                                                {tag.name}
+                                            </span>
+                                        ))}
+                                        {donor.tags.length > 4 && (
+                                            <span className="text-gray-500 text-xs">+{donor.tags.length - 4} more</span>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+                            <div className="pt-3 border-t border-gray-200">
+                                <button
+                                    onClick={() => handleSelectDonor(donor)}
+                                    className="w-full px-4 py-2 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition text-sm font-medium min-h-[44px]"
+                                >
+                                    View Profile
+                                </button>
+                            </div>
+                        </div>
+                    ))
+                )}
+            </div>
 
             {/* Summary Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-white rounded-lg shadow-md p-6">
-                    <p className="text-sm text-gray-600">Total Donors</p>
-                    <p className="text-2xl font-bold text-gray-900">{filteredDonors.length}</p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="bg-white rounded-lg shadow-md p-4 sm:p-6">
+                    <p className="text-xs sm:text-sm text-gray-600">Total Donors</p>
+                    <p className="text-xl sm:text-2xl font-bold text-gray-900 mt-1">{filteredDonors.length}</p>
                 </div>
-                <div className="bg-white rounded-lg shadow-md p-6">
-                    <p className="text-sm text-gray-600">Total Donations</p>
-                    <p className="text-2xl font-bold text-gray-900">
+                <div className="bg-white rounded-lg shadow-md p-4 sm:p-6">
+                    <p className="text-xs sm:text-sm text-gray-600">Total Donations</p>
+                    <p className="text-xl sm:text-2xl font-bold text-gray-900 mt-1">
                         {filteredDonors.reduce((sum, d) => sum + d.statistics.totalDonations, 0)}
                     </p>
                 </div>
-                <div className="bg-white rounded-lg shadow-md p-6">
-                    <p className="text-sm text-gray-600">Total Items Delivered</p>
-                    <p className="text-2xl font-bold text-gray-900">
+                <div className="bg-white rounded-lg shadow-md p-4 sm:p-6">
+                    <p className="text-xs sm:text-sm text-gray-600">Total Items Delivered</p>
+                    <p className="text-xl sm:text-2xl font-bold text-gray-900 mt-1">
                         {filteredDonors.reduce((sum, d) => sum + d.statistics.deliveredItems, 0)}
                     </p>
                 </div>

@@ -351,45 +351,45 @@ const AdminDashboard: React.FC = () => {
     }
 
     return (
-        <div className="max-w-7xl mx-auto space-y-8">
-            <div className="flex justify-between items-center">
+        <div className="max-w-7xl mx-auto space-y-6 sm:space-y-8">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-                    <p className="text-gray-600">Overview of all charitable activities.</p>
+                    <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Admin Dashboard</h1>
+                    <p className="text-sm sm:text-base text-gray-600 mt-1">Overview of all charitable activities.</p>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                     <button
                         onClick={() => exportToCSV(donations, 'donations')}
-                        className="px-4 py-2 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition text-sm font-medium flex items-center gap-2"
+                        className="flex-1 sm:flex-none px-3 sm:px-4 py-2 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition text-sm font-medium flex items-center justify-center gap-2 min-h-[44px]"
                     >
                         <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                             <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
                         </svg>
-                        Export CSV
+                        <span className="hidden sm:inline">Export</span> CSV
                     </button>
                     <button
                         onClick={() => exportToJSON(donations, 'donations')}
-                        className="px-4 py-2 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition text-sm font-medium flex items-center gap-2"
+                        className="flex-1 sm:flex-none px-3 sm:px-4 py-2 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition text-sm font-medium flex items-center justify-center gap-2 min-h-[44px]"
                     >
                         <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                             <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
                         </svg>
-                        Export JSON
+                        <span className="hidden sm:inline">Export</span> JSON
                     </button>
                     <button
                         onClick={() => exportToPDF(donations, 'donations')}
-                        className="px-4 py-2 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition text-sm font-medium flex items-center gap-2"
+                        className="flex-1 sm:flex-none px-3 sm:px-4 py-2 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition text-sm font-medium flex items-center justify-center gap-2 min-h-[44px]"
                     >
                         <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                             <path fillRule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z" clipRule="evenodd" />
                         </svg>
-                        Export PDF
+                        <span className="hidden sm:inline">Export</span> PDF
                     </button>
                 </div>
             </div>
 
             {/* Summary Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                 <StatCard title="Total Donations" value={summaryStats.totalDonations} icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>} />
                 <StatCard title="Total Items Donated" value={summaryStats.totalItems} icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" /></svg>} />
                 <StatCard title="Pending Review" value={summaryStats.pendingCount} icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>} />
@@ -397,15 +397,15 @@ const AdminDashboard: React.FC = () => {
             </div>
 
             {/* Analytics Charts */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                 {/* Donations Over Time */}
-                <div className="bg-white p-6 rounded-lg shadow-md">
-                    <div className="flex justify-between items-center mb-4">
-                        <h2 className="text-xl font-bold text-gray-800">Donations Over Time</h2>
+                <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-4">
+                        <h2 className="text-lg sm:text-xl font-bold text-gray-800">Donations Over Time</h2>
                         <select
                             value={timeRange}
                             onChange={(e) => setTimeRange(e.target.value as '7d' | '30d' | 'monthly' | 'quarterly' | 'all')}
-                            className="px-3 py-1 border border-gray-300 rounded-md text-sm focus:ring-teal-500 focus:border-teal-500"
+                            className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-teal-500 focus:border-teal-500 min-h-[44px]"
                         >
                             <option value="7d">Last 7 Days</option>
                             <option value="30d">Last 30 Days</option>
@@ -414,7 +414,8 @@ const AdminDashboard: React.FC = () => {
                             <option value="all">All Time</option>
                         </select>
                     </div>
-                    <ResponsiveContainer width="100%" height={300}>
+                    <div className="w-full" style={{ height: '250px' }}>
+                        <ResponsiveContainer width="100%" height="100%">
                         <AreaChart data={donationsOverTime}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="date" />
@@ -424,13 +425,15 @@ const AdminDashboard: React.FC = () => {
                             <Area type="monotone" dataKey="count" stroke="#14b8a6" fill="#14b8a6" fillOpacity={0.3} name="Donations" />
                             <Area type="monotone" dataKey="items" stroke="#3b82f6" fill="#3b82f6" fillOpacity={0.3} name="Items" />
                         </AreaChart>
-                    </ResponsiveContainer>
+                        </ResponsiveContainer>
+                    </div>
                 </div>
 
                 {/* Status Distribution */}
-                <div className="bg-white p-6 rounded-lg shadow-md">
-                    <h2 className="text-xl font-bold text-gray-800 mb-4">Donations by Status</h2>
-                    <ResponsiveContainer width="100%" height={300}>
+                <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md">
+                    <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-4">Donations by Status</h2>
+                    <div className="w-full" style={{ height: '250px' }}>
+                        <ResponsiveContainer width="100%" height="100%">
                         <PieChart>
                             <Pie
                                 data={statusChartData}
@@ -448,15 +451,17 @@ const AdminDashboard: React.FC = () => {
                             </Pie>
                             <Tooltip />
                         </PieChart>
-                    </ResponsiveContainer>
+                        </ResponsiveContainer>
+                    </div>
                 </div>
             </div>
 
             {/* Category Breakdown */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="bg-white p-6 rounded-lg shadow-md">
-                    <h2 className="text-xl font-bold text-gray-800 mb-4">Donations by Category</h2>
-                    <ResponsiveContainer width="100%" height={300}>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+                <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md">
+                    <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-4">Donations by Category</h2>
+                    <div className="w-full" style={{ height: '250px' }}>
+                        <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={categoryChartData}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="name" />
@@ -466,39 +471,62 @@ const AdminDashboard: React.FC = () => {
                             <Bar dataKey="donations" fill="#14b8a6" name="Number of Donations" />
                             <Bar dataKey="items" fill="#3b82f6" name="Total Items" />
                         </BarChart>
-                    </ResponsiveContainer>
+                        </ResponsiveContainer>
+                    </div>
                 </div>
 
-                <div className="bg-white p-6 rounded-lg shadow-md">
-                    <h2 className="text-xl font-bold text-gray-800 mb-4">Category Breakdown Table</h2>
-                    <div className="overflow-x-auto">
+                <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md">
+                    <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-4">Category Breakdown</h2>
+                    {/* Desktop Table View */}
+                    <div className="hidden md:block overflow-x-auto">
                         <table className="w-full text-sm text-left text-gray-500">
                             <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                                 <tr>
-                                    <th scope="col" className="px-6 py-3">Category</th>
-                                    <th scope="col" className="px-6 py-3">Total Items</th>
-                                    <th scope="col" className="px-6 py-3"># of Donations</th>
+                                    <th scope="col" className="px-4 sm:px-6 py-3">Category</th>
+                                    <th scope="col" className="px-4 sm:px-6 py-3">Total Items</th>
+                                    <th scope="col" className="px-4 sm:px-6 py-3"># of Donations</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {categoryStats.map(([category, stats]) => (
                                     <tr key={category} className="bg-white border-b hover:bg-gray-50">
-                                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{category}</th>
-                                        <td className="px-6 py-4">{stats.totalItems}</td>
-                                        <td className="px-6 py-4">{stats.count}</td>
+                                        <th scope="row" className="px-4 sm:px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{category}</th>
+                                        <td className="px-4 sm:px-6 py-4">{stats.totalItems}</td>
+                                        <td className="px-4 sm:px-6 py-4">{stats.count}</td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
                     </div>
+                    {/* Mobile Card View */}
+                    <div className="md:hidden space-y-3">
+                        {categoryStats.map(([category, stats]) => (
+                            <div key={category} className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                                <div className="flex justify-between items-start mb-2">
+                                    <h3 className="font-semibold text-gray-900">{category}</h3>
+                                </div>
+                                <div className="grid grid-cols-2 gap-2 text-sm">
+                                    <div>
+                                        <span className="text-gray-600">Total Items:</span>
+                                        <span className="ml-2 font-semibold text-gray-900">{stats.totalItems}</span>
+                                    </div>
+                                    <div>
+                                        <span className="text-gray-600">Donations:</span>
+                                        <span className="ml-2 font-semibold text-gray-900">{stats.count}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
 
             {/* Monthly & Quarterly Statistics */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="bg-white p-6 rounded-lg shadow-md">
-                    <h2 className="text-xl font-bold text-gray-800 mb-4">Monthly Statistics</h2>
-                    <div className="overflow-x-auto max-h-96">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+                <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md">
+                    <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-4">Monthly Statistics</h2>
+                    {/* Desktop Table View */}
+                    <div className="hidden md:block overflow-x-auto max-h-96">
                         <table className="w-full text-sm text-left text-gray-500">
                             <thead className="text-xs text-gray-700 uppercase bg-gray-50 sticky top-0">
                                 <tr>
@@ -522,11 +550,34 @@ const AdminDashboard: React.FC = () => {
                             </tbody>
                         </table>
                     </div>
+                    {/* Mobile Card View */}
+                    <div className="md:hidden space-y-3 max-h-96 overflow-y-auto">
+                        {monthlyStats.map((stat) => (
+                            <div key={stat.month} className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                                <h3 className="font-semibold text-gray-900 mb-2">{stat.label}</h3>
+                                <div className="grid grid-cols-3 gap-2 text-sm">
+                                    <div>
+                                        <span className="text-gray-600 block">Donations</span>
+                                        <span className="font-semibold text-gray-900">{stat.donations}</span>
+                                    </div>
+                                    <div>
+                                        <span className="text-gray-600 block">Items</span>
+                                        <span className="font-semibold text-gray-900">{stat.items}</span>
+                                    </div>
+                                    <div>
+                                        <span className="text-gray-600 block">Delivered</span>
+                                        <span className="font-semibold text-green-600">{stat.delivered}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
 
-                <div className="bg-white p-6 rounded-lg shadow-md">
-                    <h2 className="text-xl font-bold text-gray-800 mb-4">Quarterly Statistics</h2>
-                    <div className="overflow-x-auto max-h-96">
+                <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md">
+                    <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-4">Quarterly Statistics</h2>
+                    {/* Desktop Table View */}
+                    <div className="hidden md:block overflow-x-auto max-h-96">
                         <table className="w-full text-sm text-left text-gray-500">
                             <thead className="text-xs text-gray-700 uppercase bg-gray-50 sticky top-0">
                                 <tr>
@@ -550,13 +601,35 @@ const AdminDashboard: React.FC = () => {
                             </tbody>
                         </table>
                     </div>
+                    {/* Mobile Card View */}
+                    <div className="md:hidden space-y-3 max-h-96 overflow-y-auto">
+                        {quarterlyStats.map((stat) => (
+                            <div key={stat.quarter} className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                                <h3 className="font-semibold text-gray-900 mb-2">{stat.label}</h3>
+                                <div className="grid grid-cols-3 gap-2 text-sm">
+                                    <div>
+                                        <span className="text-gray-600 block">Donations</span>
+                                        <span className="font-semibold text-gray-900">{stat.donations}</span>
+                                    </div>
+                                    <div>
+                                        <span className="text-gray-600 block">Items</span>
+                                        <span className="font-semibold text-gray-900">{stat.items}</span>
+                                    </div>
+                                    <div>
+                                        <span className="text-gray-600 block">Delivered</span>
+                                        <span className="font-semibold text-green-600">{stat.delivered}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
 
             {/* Donor Activity Reports */}
-            <div className="bg-white p-6 rounded-lg shadow-md">
-                <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-xl font-bold text-gray-800">Donor Activity Report</h2>
+            <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-4">
+                    <h2 className="text-lg sm:text-xl font-bold text-gray-800">Donor Activity Report</h2>
                     <button
                         onClick={() => {
                             const donorData = donorActivityReport.map(donor => ({
@@ -586,7 +659,7 @@ const AdminDashboard: React.FC = () => {
                             document.body.removeChild(link);
                             URL.revokeObjectURL(url);
                         }}
-                        className="px-4 py-2 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition text-sm font-medium flex items-center gap-2"
+                        className="px-4 py-2 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition text-sm font-medium flex items-center justify-center gap-2 min-h-[44px]"
                     >
                         <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                             <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -594,7 +667,8 @@ const AdminDashboard: React.FC = () => {
                         Export CSV
                     </button>
                 </div>
-                <div className="overflow-x-auto">
+                {/* Desktop Table View */}
+                <div className="hidden md:block overflow-x-auto">
                     <table className="w-full text-sm text-left text-gray-500">
                         <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                             <tr>
@@ -646,11 +720,59 @@ const AdminDashboard: React.FC = () => {
                         </tbody>
                     </table>
                 </div>
+                {/* Mobile Card View */}
+                <div className="md:hidden space-y-4">
+                    {donorActivityReport.length > 0 ? (
+                        donorActivityReport.map((donor) => (
+                            <div key={donor.donorId} className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                                <h3 className="font-semibold text-gray-900 mb-3">{donor.donorName}</h3>
+                                <div className="grid grid-cols-2 gap-3 text-sm mb-3">
+                                    <div>
+                                        <span className="text-gray-600 block mb-1">Total Donations</span>
+                                        <span className="font-semibold text-gray-900">{donor.totalDonations}</span>
+                                    </div>
+                                    <div>
+                                        <span className="text-gray-600 block mb-1">Total Items</span>
+                                        <span className="font-semibold text-gray-900">{donor.totalItems}</span>
+                                    </div>
+                                    <div>
+                                        <span className="text-gray-600 block mb-1">Last Donation</span>
+                                        <span className="text-gray-900 text-xs">{donor.lastDonationDate ? donor.lastDonationDate.toLocaleDateString() : 'N/A'}</span>
+                                    </div>
+                                </div>
+                                <div className="pt-3 border-t border-gray-200">
+                                    <div className="grid grid-cols-2 gap-2 text-xs">
+                                        <div className="flex items-center gap-1">
+                                            <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded">{donor.pending}</span>
+                                            <span className="text-gray-600">Pending</span>
+                                        </div>
+                                        <div className="flex items-center gap-1">
+                                            <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded">{donor.approved}</span>
+                                            <span className="text-gray-600">Approved</span>
+                                        </div>
+                                        <div className="flex items-center gap-1">
+                                            <span className="bg-green-100 text-green-800 px-2 py-1 rounded">{donor.delivered}</span>
+                                            <span className="text-gray-600">Delivered</span>
+                                        </div>
+                                        <div className="flex items-center gap-1">
+                                            <span className="bg-red-100 text-red-800 px-2 py-1 rounded">{donor.rejected}</span>
+                                            <span className="text-gray-600">Rejected</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+                    ) : (
+                        <div className="text-center py-8 text-gray-500">
+                            No donor activity data available
+                        </div>
+                    )}
+                </div>
             </div>
 
             <div>
-                 <h2 className="text-2xl font-bold text-gray-900 mb-4">Manage Donations</h2>
-                 <p className="text-gray-600 mb-6">Review and manage all incoming donations.</p>
+                 <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2 sm:mb-4">Manage Donations</h2>
+                 <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6">Review and manage all incoming donations.</p>
                  <SearchAndFilter
                     donations={donations}
                     onFilteredDonations={setFilteredDonations}
@@ -680,13 +802,19 @@ const AdminDashboard: React.FC = () => {
             />
 
             {managingDonation && (
-                <div className="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-4" aria-modal="true" role="dialog">
-                    <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] flex flex-col">
-                        <div className="p-6 border-b flex justify-between items-center sticky top-0 bg-white z-10">
-                            <h2 className="text-2xl font-bold text-gray-900">Manage Donation</h2>
-                            <button onClick={handleCloseManageModal} className="text-gray-500 hover:text-gray-800 text-3xl font-light leading-none">&times;</button>
+                <div className="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-0 sm:p-4" aria-modal="true" role="dialog">
+                    <div className="bg-white rounded-none sm:rounded-lg shadow-xl w-full h-full sm:h-auto sm:max-w-2xl sm:max-h-[90vh] flex flex-col">
+                        <div className="p-4 sm:p-6 border-b flex justify-between items-center sticky top-0 bg-white z-10">
+                            <h2 className="text-lg sm:text-2xl font-bold text-gray-900 pr-2 truncate flex-1">Manage Donation</h2>
+                            <button 
+                                onClick={handleCloseManageModal} 
+                                className="text-gray-500 hover:text-gray-800 text-2xl sm:text-3xl font-light leading-none min-w-[44px] min-h-[44px] flex items-center justify-center flex-shrink-0"
+                                aria-label="Close modal"
+                            >
+                                &times;
+                            </button>
                         </div>
-                        <div className="p-6 space-y-6 overflow-y-auto">
+                        <div className="p-4 sm:p-6 space-y-4 sm:space-y-6 overflow-y-auto flex-1">
                             <div>
                                 <h3 className="text-lg font-semibold text-gray-800 border-b pb-2 mb-3">{managingDonation.itemName}</h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
@@ -704,26 +832,42 @@ const AdminDashboard: React.FC = () => {
                                 <p><strong>Address:</strong> {managingDonation.donorAddress}</p>
                             </div>
                         </div>
-                        <div className="p-6 bg-gray-50 border-t mt-auto">
-                            <h3 className="text-lg font-semibold text-gray-800 mb-3">Actions</h3>
+                        <div className="p-4 sm:p-6 bg-gray-50 border-t mt-auto">
+                            <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-3">Actions</h3>
                             {managingDonation.status === DonationStatus.PENDING && (
-                                 <div className="flex space-x-3">
-                                    <button onClick={() => handleStatusUpdate(managingDonation.id, DonationStatus.APPROVED)} className="flex-1 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition">Approve</button>
-                                    <button onClick={() => handleStatusUpdate(managingDonation.id, DonationStatus.REJECTED)} className="flex-1 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition">Reject</button>
+                                 <div className="flex flex-col sm:flex-row gap-2 sm:space-x-3 sm:gap-0">
+                                    <button 
+                                        onClick={() => handleStatusUpdate(managingDonation.id, DonationStatus.APPROVED)} 
+                                        className="flex-1 px-4 py-3 sm:py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition min-h-[44px] font-medium"
+                                    >
+                                        Approve
+                                    </button>
+                                    <button 
+                                        onClick={() => handleStatusUpdate(managingDonation.id, DonationStatus.REJECTED)} 
+                                        className="flex-1 px-4 py-3 sm:py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition min-h-[44px] font-medium"
+                                    >
+                                        Reject
+                                    </button>
                                  </div>
                             )}
                             {[DonationStatus.APPROVED, DonationStatus.DELIVERED].includes(managingDonation.status) && (
-                                <div className="flex flex-wrap items-center gap-3">
-                                    <label htmlFor="edit-quantity" className="text-sm font-medium text-gray-700">Update Quantity:</label>
+                                <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3">
+                                    <label htmlFor="edit-quantity" className="text-sm font-medium text-gray-700 sm:mb-0">Update Quantity:</label>
                                     <input
                                         type="number"
                                         id="edit-quantity"
                                         value={editQuantity}
                                         onChange={(e) => setEditQuantity(parseInt(e.target.value, 10))}
-                                        className="w-24 px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+                                        className="w-full sm:w-24 px-3 sm:px-2 py-2 sm:py-1 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-base sm:text-sm min-h-[44px]"
                                         min="0"
                                     />
-                                    <button onClick={() => handleQuantityUpdate(managingDonation.id, editQuantity)} className="px-4 py-2 bg-blue-500 text-white text-sm rounded-md hover:bg-blue-600 transition disabled:bg-gray-400 disabled:cursor-not-allowed" disabled={editQuantity === managingDonation.quantity}>Save Changes</button>
+                                    <button 
+                                        onClick={() => handleQuantityUpdate(managingDonation.id, editQuantity)} 
+                                        className="px-4 py-3 sm:py-2 bg-blue-500 text-white text-base sm:text-sm rounded-md hover:bg-blue-600 transition disabled:bg-gray-400 disabled:cursor-not-allowed min-h-[44px] font-medium" 
+                                        disabled={editQuantity === managingDonation.quantity}
+                                    >
+                                        Save Changes
+                                    </button>
                                 </div>
                             )}
                              {![DonationStatus.PENDING, DonationStatus.APPROVED, DonationStatus.DELIVERED].includes(managingDonation.status) && (

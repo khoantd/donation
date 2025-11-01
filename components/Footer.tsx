@@ -13,8 +13,8 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
     return (
         <footer className="bg-white border-t border-gray-200 mt-auto" role="contentinfo">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 lg:py-12">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
                     {/* Brand Section */}
                     <div className="lg:col-span-1">
                         <div className="flex items-center mb-4">
@@ -63,11 +63,11 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                     {/* Quick Links */}
                     <div>
                         <h3 className="text-gray-900 font-semibold mb-4">Quick Links</h3>
-                        <ul className="space-y-2">
+                        <ul className="space-y-2 sm:space-y-3">
                             <li>
                                 <button
                                     onClick={() => onNavigate('home')}
-                                    className="text-gray-600 hover:text-teal-500 text-sm transition-colors"
+                                    className="text-gray-600 hover:text-teal-500 text-sm transition-colors py-1.5 min-h-[44px] flex items-center"
                                 >
                                     Home
                                 </button>
@@ -75,7 +75,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                             <li>
                                 <button
                                     onClick={() => onNavigate('impact')}
-                                    className="text-gray-600 hover:text-teal-500 text-sm transition-colors"
+                                    className="text-gray-600 hover:text-teal-500 text-sm transition-colors py-1.5 min-h-[44px] flex items-center"
                                 >
                                     Impact Stories
                                 </button>
@@ -87,7 +87,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                                             <li>
                                                 <button
                                                     onClick={() => onNavigate('donate')}
-                                                    className="text-gray-600 hover:text-teal-500 text-sm transition-colors"
+                                                    className="text-gray-600 hover:text-teal-500 text-sm transition-colors py-1.5 min-h-[44px] flex items-center"
                                                 >
                                                     Donate
                                                 </button>
@@ -95,7 +95,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                                             <li>
                                                 <button
                                                     onClick={() => onNavigate('history')}
-                                                    className="text-gray-600 hover:text-teal-500 text-sm transition-colors"
+                                                    className="text-gray-600 hover:text-teal-500 text-sm transition-colors py-1.5 min-h-[44px] flex items-center"
                                                 >
                                                     My History
                                                 </button>
@@ -103,7 +103,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                                             <li>
                                                 <button
                                                     onClick={() => onNavigate('profile')}
-                                                    className="text-gray-600 hover:text-teal-500 text-sm transition-colors"
+                                                    className="text-gray-600 hover:text-teal-500 text-sm transition-colors py-1.5 min-h-[44px] flex items-center"
                                                 >
                                                     My Profile
                                                 </button>
@@ -114,7 +114,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                                         <li>
                                             <button
                                                 onClick={() => onNavigate('admin')}
-                                                className="text-gray-600 hover:text-teal-500 text-sm transition-colors"
+                                                className="text-gray-600 hover:text-teal-500 text-sm transition-colors py-1.5 min-h-[44px] flex items-center"
                                             >
                                                 Admin Panel
                                             </button>
@@ -125,7 +125,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                                 <li>
                                     <button
                                         onClick={() => onNavigate('login')}
-                                        className="text-gray-600 hover:text-teal-500 text-sm transition-colors"
+                                        className="text-gray-600 hover:text-teal-500 text-sm transition-colors py-1.5 min-h-[44px] flex items-center"
                                     >
                                         Sign In
                                     </button>
@@ -137,11 +137,11 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                     {/* Resources */}
                     <div>
                         <h3 className="text-gray-900 font-semibold mb-4">Resources</h3>
-                        <ul className="space-y-2">
+                        <ul className="space-y-2 sm:space-y-3">
                             <li>
                                 <a
                                     href="#"
-                                    className="text-gray-600 hover:text-teal-500 text-sm transition-colors"
+                                    className="text-gray-600 hover:text-teal-500 text-sm transition-colors py-1.5 min-h-[44px] flex items-center"
                                     onClick={(e) => e.preventDefault()}
                                 >
                                     How It Works
@@ -150,7 +150,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                             <li>
                                 <a
                                     href="#"
-                                    className="text-gray-600 hover:text-teal-500 text-sm transition-colors"
+                                    className="text-gray-600 hover:text-teal-500 text-sm transition-colors py-1.5 min-h-[44px] flex items-center"
                                     onClick={(e) => e.preventDefault()}
                                 >
                                     Donation Guidelines
@@ -159,7 +159,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                             <li>
                                 <a
                                     href="#"
-                                    className="text-gray-600 hover:text-teal-500 text-sm transition-colors"
+                                    className="text-gray-600 hover:text-teal-500 text-sm transition-colors py-1.5 min-h-[44px] flex items-center"
                                     onClick={(e) => e.preventDefault()}
                                 >
                                     FAQ
@@ -168,7 +168,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                             <li>
                                 <a
                                     href="#"
-                                    className="text-gray-600 hover:text-teal-500 text-sm transition-colors"
+                                    className="text-gray-600 hover:text-teal-500 text-sm transition-colors py-1.5 min-h-[44px] flex items-center"
                                     onClick={(e) => e.preventDefault()}
                                 >
                                     Privacy Policy
@@ -177,7 +177,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                             <li>
                                 <a
                                     href="#"
-                                    className="text-gray-600 hover:text-teal-500 text-sm transition-colors"
+                                    className="text-gray-600 hover:text-teal-500 text-sm transition-colors py-1.5 min-h-[44px] flex items-center"
                                     onClick={(e) => e.preventDefault()}
                                 >
                                     Terms of Service
@@ -216,12 +216,12 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 </div>
 
                 {/* Bottom Bar */}
-                <div className="mt-8 pt-8 border-t border-gray-200">
-                    <div className="flex flex-col md:flex-row justify-between items-center">
-                        <p className="text-gray-600 text-sm">
+                <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-gray-200">
+                    <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+                        <p className="text-gray-600 text-xs sm:text-sm text-center sm:text-left">
                             © {currentYear} Charity Connect. All rights reserved.
                         </p>
-                        <p className="text-gray-600 text-sm mt-4 md:mt-0">
+                        <p className="text-gray-600 text-xs sm:text-sm text-center sm:text-right">
                             Made with <span className="text-red-500">❤</span> for a better world
                         </p>
                     </div>

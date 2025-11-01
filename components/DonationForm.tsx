@@ -144,75 +144,75 @@ const DonationForm: React.FC = () => {
     const categories = ['Clothing', 'Food', 'Electronics', 'Books', 'Furniture', 'Medical', 'Toys', 'Other'];
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
             <div>
-                <label htmlFor="itemName" className="block text-sm font-medium text-gray-700">Item Name</label>
+                <label htmlFor="itemName" className="block text-sm font-medium text-gray-700 mb-1">Item Name</label>
                 <input
                     type="text"
                     id="itemName"
                     value={itemName}
                     onChange={(e) => setItemName(e.target.value)}
-                    className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+                    className="block w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-base sm:text-sm min-h-[44px]"
                     required
                 />
             </div>
             <div>
-                <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description</label>
+                <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">Description</label>
                 <textarea
                     id="description"
                     rows={3}
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+                    className="block w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-base sm:text-sm resize-y"
                     required
                 />
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div>
-                    <label htmlFor="quantity" className="block text-sm font-medium text-gray-700">Quantity</label>
+                    <label htmlFor="quantity" className="block text-sm font-medium text-gray-700 mb-1">Quantity</label>
                     <input
                         type="number"
                         id="quantity"
                         min="1"
                         value={quantity}
                         onChange={(e) => setQuantity(parseInt(e.target.value, 10))}
-                        className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+                        className="block w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-base sm:text-sm min-h-[44px]"
                         required
                     />
                 </div>
                 <div>
-                    <label htmlFor="category" className="block text-sm font-medium text-gray-700">Category</label>
+                    <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">Category</label>
                     <select
                       id="category"
                       value={category}
                       onChange={(e) => setCategory(e.target.value)}
-                      className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+                      className="block w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-base sm:text-sm min-h-[44px]"
                     >
                       {categories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
                     </select>
                 </div>
             </div>
-             <div className="border-t border-gray-200 pt-6 space-y-6">
-                 <h3 className="text-lg font-medium text-gray-900">Pickup Information</h3>
+             <div className="border-t border-gray-200 pt-4 sm:pt-6 space-y-4 sm:space-y-6">
+                 <h3 className="text-base sm:text-lg font-medium text-gray-900">Pickup Information</h3>
                 <div>
-                    <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700">Phone Number</label>
+                    <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
                     <input
                         type="tel"
                         id="phoneNumber"
                         value={phoneNumber}
                         onChange={(e) => setPhoneNumber(e.target.value)}
-                        className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+                        className="block w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-base sm:text-sm min-h-[44px]"
                         required
                     />
                 </div>
                 <div>
-                    <label htmlFor="address" className="block text-sm font-medium text-gray-700">Pickup Address</label>
+                    <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">Pickup Address</label>
                     <textarea
                         id="address"
                         rows={3}
                         value={address}
                         onChange={(e) => setAddress(e.target.value)}
-                        className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+                        className="block w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-base sm:text-sm resize-y"
                         required
                     />
                 </div>
@@ -224,8 +224,8 @@ const DonationForm: React.FC = () => {
                 
                 {/* Image Previews */}
                 {imagePreviews.length > 0 && (
-                    <div className="mb-4 space-y-4">
-                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <div className="mb-4 space-y-3 sm:space-y-4">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
                             {imagePreviews.map((preview, index) => (
                                 <div key={index} className="relative group">
                                     <div className="relative aspect-square rounded-lg overflow-hidden shadow-md">
@@ -237,7 +237,7 @@ const DonationForm: React.FC = () => {
                                         <button
                                             type="button"
                                             onClick={() => removeImage(index)}
-                                            className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1.5 hover:bg-red-600 transition opacity-0 group-hover:opacity-100"
+                                            className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1.5 sm:p-2 hover:bg-red-600 transition opacity-100 sm:opacity-0 sm:group-hover:opacity-100 min-w-[32px] min-h-[32px] flex items-center justify-center"
                                             aria-label={`Remove image ${index + 1}`}
                                         >
                                             <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -254,7 +254,7 @@ const DonationForm: React.FC = () => {
                             ))}
                         </div>
                         {images.length < 5 && (
-                            <p className="text-xs text-gray-500">
+                            <p className="text-xs text-gray-500 text-center sm:text-left">
                                 {images.length} of 5 images uploaded. You can add {5 - images.length} more.
                             </p>
                         )}
@@ -262,7 +262,7 @@ const DonationForm: React.FC = () => {
                 )}
 
                 {/* Upload Area */}
-                <div className={`flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md hover:border-teal-400 transition ${imagePreviews.length >= 5 ? 'opacity-50 cursor-not-allowed' : ''}`}>
+                <div className={`flex justify-center px-4 sm:px-6 pt-4 sm:pt-5 pb-5 sm:pb-6 border-2 border-gray-300 border-dashed rounded-md hover:border-teal-400 transition ${imagePreviews.length >= 5 ? 'opacity-50 cursor-not-allowed' : ''}`}>
                     <div className="space-y-1 text-center">
                         {compressing ? (
                             <>
@@ -302,7 +302,7 @@ const DonationForm: React.FC = () => {
                 <button
                     type="submit"
                     disabled={status === 'loading'}
-                    className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 disabled:bg-teal-300 disabled:cursor-not-allowed"
+                    className="w-full flex justify-center py-3 sm:py-3.5 px-4 border border-transparent rounded-md shadow-sm text-base sm:text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 disabled:bg-teal-300 disabled:cursor-not-allowed min-h-[44px] transition"
                 >
                     {status === 'loading' ? 'Submitting...' : 'Submit Donation'}
                 </button>

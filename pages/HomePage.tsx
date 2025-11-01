@@ -94,18 +94,18 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
 
             {/* Hero Section */}
             <div className="text-center max-w-6xl mx-auto" role="banner">
-                <div className="bg-white rounded-lg shadow-xl p-8 md:p-12 lg:p-16 transform transition-all duration-700 opacity-100">
-                    <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-4">
+                <div className="bg-white rounded-lg shadow-xl p-6 sm:p-8 md:p-12 lg:p-16 transform transition-all duration-700 opacity-100">
+                    <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 leading-tight mb-3 sm:mb-4 px-2">
                         Welcome to <span className="text-teal-500">Charity Connect</span>
                     </h1>
-                    <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                    <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8 max-w-2xl mx-auto px-2">
                         Your contribution can make a world of difference. We bridge the gap between your generosity and those in need.
                     </p>
-                    <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+                    <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4 px-2">
                         <button 
                             onClick={() => onNavigate(user ? 'donate' : 'login')}
                             disabled={loading}
-                            className="bg-teal-500 text-white font-bold py-3 px-8 rounded-full hover:bg-teal-600 transform hover:scale-105 transition-all duration-300 ease-in-out shadow-lg disabled:bg-teal-300 disabled:cursor-not-allowed disabled:transform-none focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+                            className="w-full sm:w-auto bg-teal-500 text-white font-bold py-3 px-6 sm:px-8 rounded-full hover:bg-teal-600 transform hover:scale-105 transition-all duration-300 ease-in-out shadow-lg disabled:bg-teal-300 disabled:cursor-not-allowed disabled:transform-none focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 min-h-[44px]"
                             aria-label="Navigate to donate page"
                         >
                             Donate Now
@@ -113,7 +113,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                         <button 
                             onClick={() => onNavigate(user ? 'history' : 'login')}
                             disabled={loading}
-                            className="bg-gray-200 text-gray-800 font-bold py-3 px-8 rounded-full hover:bg-gray-300 transform hover:scale-105 transition-all duration-300 ease-in-out disabled:bg-gray-100 disabled:cursor-not-allowed disabled:transform-none focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                            className="w-full sm:w-auto bg-gray-200 text-gray-800 font-bold py-3 px-6 sm:px-8 rounded-full hover:bg-gray-300 transform hover:scale-105 transition-all duration-300 ease-in-out disabled:bg-gray-100 disabled:cursor-not-allowed disabled:transform-none focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 min-h-[44px]"
                             aria-label="View donation history"
                         >
                             View My Donations
@@ -149,7 +149,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                             !loading ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                         }`}
                     >
-                        <h2 className="text-3xl font-bold text-gray-900 text-center mb-6">
+                        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-4 sm:mb-6">
                             Our Impact So Far
                         </h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" role="region" aria-label="Impact statistics">
@@ -241,46 +241,46 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
             {/* Features Grid */}
             <section 
                 ref={featuresSection.ref}
-                className={`grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto transform transition-all duration-700 ${
+                className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto transform transition-all duration-700 ${
                     featuresSection.isVisible
                         ? 'opacity-100 translate-y-0'
                         : 'opacity-0 translate-y-8'
                 }`}
                 aria-label="Platform features"
             >
-                <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
                     <div className="flex items-center gap-3 mb-3">
-                        <div className="bg-teal-100 rounded-full p-3">
-                            <svg className="h-6 w-6 text-teal-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <div className="bg-teal-100 rounded-full p-2.5 sm:p-3 flex-shrink-0">
+                            <svg className="h-5 w-5 sm:h-6 sm:w-6 text-teal-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                             </svg>
                         </div>
-                        <h3 className="text-xl font-bold text-teal-600">Easy Giving</h3>
+                        <h3 className="text-lg sm:text-xl font-bold text-teal-600">Easy Giving</h3>
                     </div>
-                    <p className="text-gray-600">Our simple donation process makes it easy for you to give items to those who need them most.</p>
+                    <p className="text-sm sm:text-base text-gray-600">Our simple donation process makes it easy for you to give items to those who need them most.</p>
                 </div>
-                <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
                     <div className="flex items-center gap-3 mb-3">
-                        <div className="bg-teal-100 rounded-full p-3">
-                            <svg className="h-6 w-6 text-teal-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <div className="bg-teal-100 rounded-full p-2.5 sm:p-3 flex-shrink-0">
+                            <svg className="h-5 w-5 sm:h-6 sm:w-6 text-teal-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                             </svg>
                         </div>
-                        <h3 className="text-xl font-bold text-teal-600">Track Your Impact</h3>
+                        <h3 className="text-lg sm:text-xl font-bold text-teal-600">Track Your Impact</h3>
                     </div>
-                    <p className="text-gray-600">See the status of your donations and know when your contributions have been received.</p>
+                    <p className="text-sm sm:text-base text-gray-600">See the status of your donations and know when your contributions have been received.</p>
                 </div>
-                <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 sm:col-span-2 md:col-span-1">
                     <div className="flex items-center gap-3 mb-3">
-                        <div className="bg-teal-100 rounded-full p-3">
-                            <svg className="h-6 w-6 text-teal-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <div className="bg-teal-100 rounded-full p-2.5 sm:p-3 flex-shrink-0">
+                            <svg className="h-5 w-5 sm:h-6 sm:w-6 text-teal-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                             </svg>
                         </div>
-                        <h3 className="text-xl font-bold text-teal-600">Transparent Process</h3>
+                        <h3 className="text-lg sm:text-xl font-bold text-teal-600">Transparent Process</h3>
                     </div>
-                    <p className="text-gray-600">We ensure that your donations are managed efficiently and reach their intended recipients.</p>
+                    <p className="text-sm sm:text-base text-gray-600">We ensure that your donations are managed efficiently and reach their intended recipients.</p>
                 </div>
             </section>
 
@@ -318,11 +318,11 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                     </div>
                 ) : featuredStories.length > 0 ? (
                     <>
-                        <div className="flex justify-between items-center mb-6">
-                            <h2 className="text-2xl font-bold text-gray-800">Featured Impact Stories</h2>
+                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
+                            <h2 className="text-xl sm:text-2xl font-bold text-gray-800">Featured Impact Stories</h2>
                             <button
                                 onClick={() => onNavigate('impact')}
-                                className="text-teal-600 hover:text-teal-800 font-medium flex items-center gap-1 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 rounded px-2 py-1"
+                                className="text-teal-600 hover:text-teal-800 font-medium flex items-center gap-1 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 rounded px-2 py-1 min-h-[44px]"
                                 aria-label="View all impact stories"
                             >
                                 View All Stories
